@@ -1,8 +1,10 @@
 // @flow
 import * as React from 'react';
 
+import MenuBar from '../components/MenuBar/MenuBar';
+
 type Props = {
-  children: React.Node
+  // children: React.Node
 };
 
 export default class App extends React.Component<Props> {
@@ -11,7 +13,8 @@ export default class App extends React.Component<Props> {
   render() {
     return (
       <div>
-        {this.props.children}
+        {/* {this.props.children} */}
+        <MenuBar />
       </div>
     );
   }
