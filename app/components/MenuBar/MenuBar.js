@@ -89,7 +89,7 @@ export default class MenuBar extends Component {
       DIVIDER,
       {
         item: 'Recent File',
-        enabled: false, // @TODO for chrome app / desktop app
+        disabled: true, // @TODO for chrome app / desktop app
         description: ''
       },
       DIVIDER,
@@ -103,9 +103,92 @@ export default class MenuBar extends Component {
       }
     ];
 
+    const editItems = [
+      {
+        item: '&Undo',
+        shortcut: 'Ctrl+Z',
+        // enabled: function(){
+        // 	return undos.length >= 1;
+        // },
+        // action: undo,
+        description: 'Undoes the last action.'
+      },
+      {
+        item: '&Repeat',
+        shortcut: 'F4',
+        // enabled: function(){
+        // 	return redos.length >= 1;
+        // },
+        // action: redo,
+        description: 'Redoes the previously undone action.'
+      },
+      DIVIDER,
+      {
+        item: 'Cu&t',
+        shortcut: 'Ctrl+X',
+        // enabled: function(){
+        // 	// @TODO disable if no selection (image or text)
+        // 	return (typeof chrome !== "undefined") && chrome.permissions;
+        // },
+        // action: function(){
+        // 	document.execCommand("cut");
+        // },
+        description: 'Cuts the selection and puts it on the Clipboard.'
+      },
+      {
+        item: '&Copy',
+        shortcut: 'Ctrl+C',
+        // enabled: function(){
+        // 	// @TODO disable if no selection (image or text)
+        // 	return (typeof chrome !== "undefined") && chrome.permissions;
+        // },
+        // action: function(){
+        // 	document.execCommand("copy");
+        // },
+        description: 'Copies the selection and puts it on the Clipboard.'
+      },
+      {
+        item: '&Paste',
+        shortcut: 'Ctrl+V',
+        // enabled: function(){
+        // 	return (typeof chrome !== "undefined") && chrome.permissions;
+        // },
+        // action: function(){
+        // 	document.execCommand("paste");
+        // },
+        description: 'Inserts the contents of the Clipboard.'
+      },
+      {
+        item: 'C&lear Selection',
+        shortcut: 'Del',
+        // enabled: function(){ return !!selection; },
+        // action: delete_selection,
+        description: 'Deletes the selection.'
+      },
+      {
+        item: 'Select &All',
+        shortcut: 'Ctrl+A',
+        // action: select_all,
+        description: 'Selects everything.'
+      },
+      DIVIDER,
+      {
+        item: 'C&opy To...',
+        // enabled: function(){ return !!selection; },
+        // action: save_selection_to_file,
+        description: 'Copies the selection to a file.'
+      },
+      {
+        item: 'Paste &From...',
+        // action: paste_from_file_select_dialog,
+        description: 'Pastes a file into the selection.'
+      }
+    ];
+
     return (
       <div className={styles['menu-bar']}>
-        <Menu title="&File" items={fileItems} />
+        <Menu title="&File" items={fileItems} activeMenu />
+        <Menu title="&Edit" items={editItems} activeMenu />
       </div>
     );
   }

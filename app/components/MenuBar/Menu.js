@@ -10,20 +10,20 @@ export default class Menu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      isOpen: false
     };
-    this.togglePopup = this.togglePopup.bind(this);
+    // this.togglePopup = this.togglePopup.bind(this);
   }
 
-  togglePopup() {
-    this.setState(prevState => ({
-      open: !prevState.open
-    }));
-  }
+  // togglePopup() {
+  //   this.setState(prevState => ({
+  //     open: !prevState.open
+  //   }));
+  // }
 
   render() {
-    const { title, items } = this.props;
-    const { open } = this.state;
+    const { title, items, activeMenu } = this.props;
+    const { isOpen } = this.state;
 
     const embedHotkey = str => {
       const arr = [];
@@ -47,20 +47,36 @@ export default class Menu extends Component {
     };
 
     return (
-      <div className={styles.menu__container}>
+      <div
+        className={styles.menu__container}
+        onMouseOver={() => {
+          if (activeMenu && !this.state.isOpen) {
+            this.setState({
+              isOpen: true
+            });
+          }
+        }}
+        onMouseLeave={() => {
+          this.setState({
+            isOpen: false
+          });
+        }}
+      >
         <div
           className={classNames({
             [styles.menu__button]: true,
-            [styles['menu__button--active']]: open
+            [styles['menu__button--active']]: isOpen
           })}
-          onClick={this.togglePopup}
+          onClick={() => {
+            // dispatch active menu
+          }}
         >
           {embedHotkey(title)}
         </div>
         <div
           className={classNames({
             [styles.menu__popup]: true,
-            [styles['menu__popup--disabled']]: !open
+            [styles['menu__popup--disabled']]: !isOpen
           })}
         >
           <table className={styles.menu__popup__table}>
@@ -76,7 +92,7 @@ export default class Menu extends Component {
                   );
                 }
                 return (
-                  <tr className={styles.menu__item} key={uuid()}>
+                  <tr className={styles.menu__item} key={uuid()} disabled={item.disabled}>
                     <td className={styles.menu__item__checkbox} />
                     <td className={styles.menu__item__label}>{embedHotkey(item.item)}</td>
                     <td className={styles.menu__item__shortcut}>{item.shortcut}</td>

@@ -3,3 +3,7 @@
   font-family: 'Segoe UI', sans-serif;
   font-size: 12px;
 }
+
+.menu-bar * {
+  user-select: none;
+}
