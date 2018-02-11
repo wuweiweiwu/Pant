@@ -3,17 +3,35 @@ import classNames from 'classnames';
 import uuid from 'uuid/v1';
 import { connect } from 'react-redux';
 
-export const DIVIDER = 'DIVIDER';
+export const DIVIDER: string = 'DIVIDER';
 
 import styles from './Menu.css';
 
-class Menu extends Component {
+type item =
+  | {
+      item: string,
+      shortcut?: string,
+      description: string,
+      disabled?: boolean
+    }
+  | string;
+
+type Props = {
+  closeMenu: () => void,
+  openMenu: () => void,
+  title: string,
+  activeMenu: boolean,
+  isOpen: boolean,
+  items: Array<item>
+};
+
+class Menu extends Component<Props> {
   render() {
     const {
       title, items, activeMenu, isOpen, openMenu, closeMenu
     } = this.props;
 
-    const embedHotkey = str => {
+    const embedHotkey = (str: string) => {
       const arr = [];
       arr.push(str.split('&')[0]);
 

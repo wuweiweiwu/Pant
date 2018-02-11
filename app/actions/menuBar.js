@@ -1,3 +1,5 @@
+// @flow
+
 export const FILE = 'FILE';
 export const EDIT = 'EDIT';
 
@@ -6,7 +8,7 @@ export const FOCUS_EDIT = 'FOCUS_EDIT';
 
 export const LEAVE_MENU = 'LEAVE_MENU';
 
-export function openMenu(menu) {
+export function openMenu(menu: string) {
   switch (menu) {
     case FILE:
       return { type: FOCUS_FILE };
@@ -15,9 +17,6 @@ export function openMenu(menu) {
     default:
       return { type: FOCUS_FILE };
   }
-  return {
-    type: FOCUS_MENU
-  };
 }
 
 export function closeMenu() {
