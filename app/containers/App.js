@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 
-import MenuBar from '../components/MenuBar/MenuBar';
+import MenuBar from '../components/MenuBar';
 
 type Props = {
   // children: React.Node
