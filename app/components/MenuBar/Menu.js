@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import uuid from 'uuid/v1';
+
+export const DIVIDER = 'DIVIDER';
 
 import styles from './Menu.css';
 
@@ -59,20 +62,31 @@ export default class Menu extends Component {
         >
           <table className={styles.menu__popup__table}>
             <tbody>
-              {items.map(item => (
-                <tr className={styles.menu__item}>
-                  <td className={styles.menu__item__checkbox} />
-                  <td className={styles.menu__item__label}>
-                    {firstPart(item.item)}
-                    {hotkey(item.item) && (
-                      <span className={styles.menu__hotkey}>{hotkey(item.item)}</span>
-                    )}
-                    {secondPart(item.item)}
-                  </td>
-                  <td className={styles.menu__item__shortcut}>{item.shortcut}</td>
-                  <td className={styles.menu__item__submenu} />
-                </tr>
-              ))}
+              {items.map(item => {
+                if (item === DIVIDER) {
+                  return (
+                    <tr key={uuid()}>
+                      <td colSpan={4}>
+                        <hr className={styles.menu__divider} />
+                      </td>
+                    </tr>
+                  );
+                }
+                return (
+                  <tr className={styles.menu__item} key={uuid()}>
+                    <td className={styles.menu__item__checkbox} />
+                    <td className={styles.menu__item__label}>
+                      {firstPart(item.item)}
+                      {hotkey(item.item) && (
+                        <span className={styles.menu__hotkey}>{hotkey(item.item)}</span>
+                      )}
+                      {secondPart(item.item)}
+                    </td>
+                    <td className={styles.menu__item__shortcut}>{item.shortcut}</td>
+                    <td className={styles.menu__item__submenu} />
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

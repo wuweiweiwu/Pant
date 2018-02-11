@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Menu from './Menu';
+import Menu, { DIVIDER } from './Menu';
 
 import styles from './MenuBar.css';
 
@@ -32,7 +32,7 @@ export default class MenuBar extends Component {
         // action: file_save_as,
         description: 'Saves the active document with a new name.'
       },
-      // $MenuBar.DIVIDER,
+      DIVIDER,
       {
         item: '&Load From URL',
         // shortcut: "Ctrl+L",
@@ -44,13 +44,13 @@ export default class MenuBar extends Component {
         // action: upload_to_imgur,
         description: 'Uploads the active document to Imgur'
       },
-      // $MenuBar.DIVIDER,
+      DIVIDER,
       {
         item: 'Manage Storage',
         // action: manage_storage,
         description: 'Manages storage of previously created or opened pictures.'
       },
-      // $MenuBar.DIVIDER,
+      DIVIDER,
       {
         item: 'Print Pre&view',
         // action() {
@@ -75,7 +75,7 @@ export default class MenuBar extends Component {
         // },
         description: 'Prints the active document and sets printing options.'
       },
-      // $MenuBar.DIVIDER,
+      DIVIDER,
       {
         item: 'Set As &Wallpaper (Tiled)',
         // action: set_as_wallpaper_tiled,
@@ -86,13 +86,13 @@ export default class MenuBar extends Component {
         // action: set_as_wallpaper_centered,
         description: 'Centers this bitmap as the desktop background.'
       },
-      // $MenuBar.DIVIDER,
+      DIVIDER,
       {
         item: 'Recent File',
         enabled: false, // @TODO for chrome app / desktop app
         description: ''
       },
-      // $MenuBar.DIVIDER,
+      DIVIDER,
       {
         item: 'E&xit',
         shortcut: 'Alt+F4',
