@@ -105,7 +105,7 @@ export default class MenuBar extends Component {
 
     return (
       <div className={styles['menu-bar']}>
-        <Menu title="File" items={fileItems} />
+        <Menu title="&File" items={fileItems} />
       </div>
     );
   }

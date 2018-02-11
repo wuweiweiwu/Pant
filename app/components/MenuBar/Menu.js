@@ -25,22 +25,25 @@ export default class Menu extends Component {
     const { title, items } = this.props;
     const { open } = this.state;
 
-    const firstPart = str => str.split('&')[0];
+    const embedHotkey = str => {
+      const arr = [];
+      arr.push(str.split('&')[0]);
 
-    const hotkey = str => {
+      let hotkey = null;
       const index = str.indexOf('&');
       if (index >= 0) {
-        return str[index + 1];
+        hotkey = str[index + 1];
       }
-      return null;
-    };
+      arr.push(hotkey ? (
+        <span className={styles.menu__hotkey} key={uuid()}>
+          {hotkey}
+        </span>
+      ) : null);
 
-    const secondPart = str => {
-      const split = str.split('&')[1];
-      if (!split || split.length === 0) {
-        return '';
-      }
-      return split.substring(1);
+      const second = str.split('&')[1];
+      arr.push(second ? second.substring(1) : null);
+
+      return arr;
     };
 
     return (
@@ -52,7 +55,7 @@ export default class Menu extends Component {
           })}
           onClick={this.togglePopup}
         >
-          {title}
+          {embedHotkey(title)}
         </div>
         <div
           className={classNames({
@@ -75,13 +78,7 @@ export default class Menu extends Component {
                 return (
                   <tr className={styles.menu__item} key={uuid()}>
                     <td className={styles.menu__item__checkbox} />
-                    <td className={styles.menu__item__label}>
-                      {firstPart(item.item)}
-                      {hotkey(item.item) && (
-                        <span className={styles.menu__hotkey}>{hotkey(item.item)}</span>
-                      )}
-                      {secondPart(item.item)}
-                    </td>
+                    <td className={styles.menu__item__label}>{embedHotkey(item.item)}</td>
                     <td className={styles.menu__item__shortcut}>{item.shortcut}</td>
                     <td className={styles.menu__item__submenu} />
                   </tr>
