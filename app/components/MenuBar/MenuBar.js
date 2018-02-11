@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-
 import Menu, { DIVIDER } from './Menu';
-
 import styles from './MenuBar.css';
 
-export default class MenuBar extends Component {
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { openMenu, closeMenu, FILE, EDIT } from '../../actions/menuBar';
+
+class MenuBar extends Component {
   render() {
     const fileItems = [
       {
@@ -185,11 +187,40 @@ export default class MenuBar extends Component {
       }
     ];
 
+    const {
+      fileActive, editActive, openMenu, closeMenu
+    } = this.props;
+
     return (
       <div className={styles['menu-bar']}>
-        <Menu title="&File" items={fileItems} activeMenu />
-        <Menu title="&Edit" items={editItems} activeMenu />
+        <Menu
+          title="&File"
+          items={fileItems}
+          isOpen={fileActive}
+          openMenu={() => openMenu(FILE)}
+          closeMenu={closeMenu}
+        />
+        <Menu
+          title="&Edit"
+          items={editItems}
+          isOpen={editActive}
+          openMenu={() => openMenu(EDIT)}
+          closeMenu={closeMenu}
+        />
       </div>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    fileActive: state.menu.file,
+    editActive: state.menu.edit
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ openMenu, closeMenu }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MenuBar);

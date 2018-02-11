@@ -1,29 +1,17 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import uuid from 'uuid/v1';
+import { connect } from 'react-redux';
 
 export const DIVIDER = 'DIVIDER';
 
 import styles from './Menu.css';
 
-export default class Menu extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isOpen: false
-    };
-    // this.togglePopup = this.togglePopup.bind(this);
-  }
-
-  // togglePopup() {
-  //   this.setState(prevState => ({
-  //     open: !prevState.open
-  //   }));
-  // }
-
+class Menu extends Component {
   render() {
-    const { title, items, activeMenu } = this.props;
-    const { isOpen } = this.state;
+    const {
+      title, items, activeMenu, isOpen, openMenu, closeMenu
+    } = this.props;
 
     const embedHotkey = str => {
       const arr = [];
@@ -50,16 +38,16 @@ export default class Menu extends Component {
       <div
         className={styles.menu__container}
         onMouseOver={() => {
-          if (activeMenu && !this.state.isOpen) {
-            this.setState({
-              isOpen: true
-            });
+          if (activeMenu && !isOpen) {
+            openMenu();
           }
         }}
-        onMouseLeave={() => {
-          this.setState({
-            isOpen: false
-          });
+        onClick={() => {
+          if (isOpen) {
+            closeMenu();
+          } else {
+            openMenu();
+          }
         }}
       >
         <div
@@ -67,9 +55,6 @@ export default class Menu extends Component {
             [styles.menu__button]: true,
             [styles['menu__button--active']]: isOpen
           })}
-          onClick={() => {
-            // dispatch active menu
-          }}
         >
           {embedHotkey(title)}
         </div>
@@ -107,3 +92,11 @@ export default class Menu extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    activeMenu: state.menu.active
+  };
+}
+
+export default connect(mapStateToProps)(Menu);
