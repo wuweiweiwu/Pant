@@ -2,7 +2,7 @@
 import * as React from 'react';
 
 import MenuBar from './MenuBar';
-import ToolBox from './ToolBox';
+import Toolbar from './Toolbar';
 
 import styles from './App.css';
 
@@ -19,7 +19,7 @@ export default class App extends React.Component<Props> {
         <div className={styles.vertical}>
           <MenuBar />
           <div className={styles.horizontal}>
-            <ToolBox />
+            <Toolbar />
           </div>
         </div>
       </div>

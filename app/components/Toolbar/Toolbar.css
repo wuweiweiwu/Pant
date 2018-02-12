@@ -1,4 +1,4 @@
-.toolbox {
+.toolbar {
   height: 273px;
   align-items: center;
   padding-left: 4px;
@@ -24,4 +24,6 @@
 .tools {
   display: flex;
   flex-flow: row wrap;
+  height: 200px;
+  width: 50px;
 }
