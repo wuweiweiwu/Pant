@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Menu, { DIVIDER } from './Menu';
-import styles from './MenuBar.css';
+import styles from './Menubar.css';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { openMenu, closeMenu, FILE, EDIT } from '../../actions/menuBar';
+import { openMenu, closeMenu, FILE, EDIT } from '../../actions/menubar';
 
 class MenuBar extends Component {
   render() {

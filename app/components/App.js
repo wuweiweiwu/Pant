@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 
-import MenuBar from './MenuBar';
+import Menubar from './Menubar';
 import Toolbar from './Toolbar';
 
 import styles from './App.css';
@@ -17,7 +17,7 @@ export default class App extends React.Component<Props> {
     return (
       <div className={styles.reactpaint}>
         <div className={styles.vertical}>
-          <MenuBar />
+          <Menubar />
           <div className={styles.horizontal}>
             <Toolbar />
           </div>

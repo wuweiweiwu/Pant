@@ -1,4 +1,4 @@
-import { FOCUS_MENU, LEAVE_MENU, FILE, EDIT } from '../actions/menuBar';
+import { FOCUS_MENU, LEAVE_MENU, FILE, EDIT } from '../actions/menubar';
 
 const INIT = { file: false, edit: false, active: false };
 
