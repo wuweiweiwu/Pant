@@ -1,10 +1,10 @@
 // @flow
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import Routes from '../routes';
+// import { ConnectedRouter } from 'react-router-redux';
+// import Routes from '../routes';
 
-import App from './App';
+import App from '../components/App';
 
 type Props = {
   store: {}

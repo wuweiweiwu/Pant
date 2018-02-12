@@ -53,26 +53,24 @@ class Menu extends Component<Props> {
     };
 
     return (
-      <div
-        className={styles.menu__container}
-        onMouseOver={() => {
-          if (activeMenu && !isOpen) {
-            openMenu();
-          }
-        }}
-        onClick={() => {
-          if (isOpen) {
-            closeMenu();
-          } else {
-            openMenu();
-          }
-        }}
-      >
+      <div className={styles.menu__container}>
         <div
           className={classNames({
             [styles.menu__button]: true,
             [styles['menu__button--active']]: isOpen
           })}
+          onMouseOver={() => {
+            if (activeMenu && !isOpen) {
+              openMenu();
+            }
+          }}
+          onClick={() => {
+            if (isOpen) {
+              closeMenu();
+            } else {
+              openMenu();
+            }
+          }}
         >
           {embedHotkey(title)}
         </div>
