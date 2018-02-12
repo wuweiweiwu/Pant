@@ -1,0 +1,27 @@
+.toolbox {
+  height: 273px;
+  align-items: center;
+  padding-left: 4px;
+  padding-right: 2px;
+  flex-flow: column;
+}
+
+.tool__options {
+  margin-top: 3px;
+  width: 41px;
+  height: 66px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  border: 1px solid white;
+  border-top-color: #7b7b7b;
+  border-left-color: #7b7b7b;
+}
+
+.tool__options > div {
+  flex: 1;
+}
+
+.tools {
+  display: flex;
+  flex-flow: row wrap;
+}

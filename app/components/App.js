@@ -2,6 +2,9 @@
 import * as React from 'react';
 
 import MenuBar from './MenuBar';
+import ToolBox from './ToolBox';
+
+import styles from './App.css';
 
 type Props = {
   // children: React.Node
@@ -12,9 +15,13 @@ export default class App extends React.Component<Props> {
 
   render() {
     return (
-      <div>
-        <MenuBar />
-        <div />
+      <div className={styles.reactpaint}>
+        <div className={styles.vertical}>
+          <MenuBar />
+          <div className={styles.horizontal}>
+            <ToolBox />
+          </div>
+        </div>
       </div>
     );
   }

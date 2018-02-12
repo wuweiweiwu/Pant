@@ -37,7 +37,7 @@
 }
 
 .menu__popup--disabled {
-  display: none;
+  display: none !important;
 }
 
 .menu__popup__table {
