@@ -192,7 +192,7 @@ class MenuBar extends Component {
     } = this.props;
 
     return (
-      <div className={styles['menu-bar']}>
+      <div className={styles.menubar}>
         <Menu
           title="&File"
           items={fileItems}
