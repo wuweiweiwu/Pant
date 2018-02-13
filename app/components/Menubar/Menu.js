@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 export const DIVIDER: string = 'DIVIDER';
 
-import styles from './Menu.css';
+import styles from './Menu.scss';
 
 type item =
   | {

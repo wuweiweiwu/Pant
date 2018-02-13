@@ -17,8 +17,10 @@
   border-left-color: #7b7b7b;
 }
 
-.tool__options > div {
-  flex: 1;
+.tool__options {
+  div {
+    flex: 1;
+  }
 }
 
 .tools {

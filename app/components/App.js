@@ -4,7 +4,7 @@ import * as React from 'react';
 import Menubar from './Menubar';
 import Toolbar from './Toolbar';
 
-import styles from './App.css';
+import styles from './App.scss';
 
 type Props = {
   // children: React.Node

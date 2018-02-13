@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Menu, { DIVIDER } from './Menu';
-import styles from './Menubar.css';
+import styles from './Menubar.scss';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';

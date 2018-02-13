@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import Tool from './Tool';
 
-import styles from './Toolbar.css';
+import styles from './Toolbar.scss';
 
 class ToolBox extends Component {
   render() {
