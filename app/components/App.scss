@@ -1,3 +1,7 @@
+.reactpaint :not(table):not(tbody):not(tr):not(td) {
+  display: flex;
+}
+
 .reactpaint {
   display: flex;
   flex-flow: column;
@@ -24,4 +28,8 @@
   .vertical {
     height: 100%;
   }
+}
+
+.component {
+  flex: 0 0 auto;
 }

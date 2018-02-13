@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import Menubar from './Menubar';
 import Toolbar from './Toolbar';
+import Canvas from './Canvas';
 
 import styles from './App.scss';
 
@@ -20,6 +21,7 @@ export default class App extends React.Component<Props> {
           <Menubar />
           <div className={styles.horizontal}>
             <Toolbar />
+            <Canvas />
           </div>
         </div>
       </div>
