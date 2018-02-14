@@ -45,6 +45,10 @@ body,
   background: #c0c0c0;
 }
 
+* {
+  image-rendering: pixelated;
+}
+
 ::selection {
   background-color: #000080;
   color: white;

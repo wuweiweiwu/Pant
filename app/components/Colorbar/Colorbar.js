@@ -6,25 +6,43 @@ import { connect } from 'react-redux';
 import styles from './Colorbar.scss';
 
 class Colorbar extends Component {
+  componentDidMount() {
+    if (!this.primary) return;
+
+    const ctx1 = this.primary.getContext('2d');
+    ctx1.fillStyle = 'black';
+    ctx1.fillRect(0, 0, 13, 13);
+
+    if (!this.secondary) return;
+    const ctx2 = this.secondary.getContext('2d');
+    ctx2.fillStyle = 'white';
+    ctx2.fillRect(0, 0, 13, 13);
+  }
+
   render() {
     return (
       <div className={styles.colorbar}>
-        <div
-          className={classNames(styles.swatch, styles['current-colors'])}
-          style={{ position: 'relative' }}
-        >
-          <canvas style={{ pointerEvents: 'none' }} width="28" height="29" />
+        <div className={styles.colorbar__switcher}>
+          <canvas height="28px" width="29px" />
           <div
-            className={classNames(styles.swatch, styles['color-selection'])}
-            style={{ position: 'absolute', right: '3px', bottom: '3px' }}
+            className={styles.colorbar__cell}
+            style={{
+              position: 'absolute',
+              right: '3px',
+              bottom: '3px'
+            }}
           >
-            <canvas style={{ pointerEvents: 'none' }} width="13" height="13" />
+            <canvas ref={cv => (this.secondary = cv)} height="13px" width="13px" />
           </div>
           <div
-            className={classNames(styles.swatch, styles['color-selection'])}
-            style={{ position: 'absolute', left: '2px', top: '4px' }}
+            className={styles.colorbar__cell}
+            style={{
+              position: 'absolute',
+              left: '2px',
+              top: '4px'
+            }}
           >
-            <canvas style={{ pointerEvents: 'none' }} width="13" height="13" />
+            <canvas ref={cv => (this.primary = cv)} height="13px" width="13px" />
           </div>
         </div>
       </div>
