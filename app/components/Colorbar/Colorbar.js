@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import uuid from 'uuid/v1';
 import { connect } from 'react-redux';
 
+import ColorCell from './ColorCell';
 import styles from './Colorbar.scss';
 
 class Colorbar extends Component {
@@ -20,30 +21,62 @@ class Colorbar extends Component {
   }
 
   render() {
+    const palette = [
+      '#000000',
+      '#787878',
+      '#790300',
+      '#757A01',
+      '#007902',
+      '#007778',
+      '#0A0078',
+      '#7B0077',
+      '#767A38',
+      '#003637',
+      '#286FFE',
+      '#083178',
+      '#4C00FE',
+      '#783B00',
+      '#FFFFFF',
+      '#BBBBBB',
+      '#FF0E00',
+      '#FAFF08',
+      '#00FF0B',
+      '#00FEFF',
+      '#3400FE',
+      '#FF00FE',
+      '#FBFF7A',
+      '#00FF7B',
+      '#76FEFF',
+      '#8270FE'
+      // '#FF0677',
+      // '#FF7D36'
+    ];
+
     return (
       <div className={styles.colorbar}>
         <div className={styles.colorbar__switcher}>
-          <canvas height="28px" width="29px" />
-          <div
-            className={styles.colorbar__cell}
+          <canvas height="29px" width="29px" />
+          <ColorCell
+            picker
+            color="white"
             style={{
               position: 'absolute',
               right: '3px',
               bottom: '3px'
             }}
-          >
-            <canvas ref={cv => (this.secondary = cv)} height="13px" width="13px" />
-          </div>
-          <div
-            className={styles.colorbar__cell}
+          />
+          <ColorCell
+            picker
+            color="black"
             style={{
               position: 'absolute',
               left: '2px',
               top: '4px'
             }}
-          >
-            <canvas ref={cv => (this.primary = cv)} height="13px" width="13px" />
-          </div>
+          />
+        </div>
+        <div className={styles.colorbar__palette}>
+          {palette.map(color => <ColorCell color={color} key={uuid()} />)}
         </div>
       </div>
     );
