@@ -78,6 +78,7 @@ class Colorbar extends Component {
         <div className={styles.colorbar__palette}>
           {palette.map(color => <ColorCell color={color} key={uuid()} />)}
         </div>
+        <input ref={input => (this.colorInput = input)} type="color" />
       </div>
     );
   }

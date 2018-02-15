@@ -13,10 +13,8 @@ class ColorCell extends Component {
     const ctx = this.canvas.getContext('2d');
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, 13, 13);
-
-    if (!this.input) return;
-    this.input.addEventListener('pointerdown', e => console.log('pointer down'));
   }
+
   render() {
     const { style, picker } = this.props;
 
@@ -26,7 +24,6 @@ class ColorCell extends Component {
         style={style}
       >
         <canvas ref={cv => (this.canvas = cv)} height="13px" width="13px" />
-        {!picker && <input ref={cp => (this.input = cp)} type="color" />}
       </div>
     );
   }

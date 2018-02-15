@@ -4,14 +4,23 @@
   align-items: center;
   margin-left: 2px;
 
+  input {
+    margin: 0;
+    padding: 0;
+    height: 0px;
+    width: 0px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
   .colorbar__switcher {
     border-top: 1px solid #7b7b7b;
     border-left: 1px solid #7b7b7b;
     border-right: 1px solid #bbbbbb;
     border-bottom: 1px solid #bbbbbb;
-
     box-sizing: border-box;
     position: relative;
+
     &:before {
       border-left: 1px solid black;
       border-top: 1px solid black;
@@ -22,6 +31,7 @@
       right: 0;
       bottom: 0;
     }
+
     &:after {
       content: '';
       position: absolute;
@@ -32,6 +42,7 @@
       border-right: 1px solid white;
       border-bottom: 1px solid white;
     }
+
     & > canvas {
       pointer-events: none;
       background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACAQMAAABIeJ9nAAAABlBMVEW9vb3///8EwsWUAAAADElEQVQI12NoYHAAAAHEAMFJRSpJAAAAAElFTkSuQmCC)
