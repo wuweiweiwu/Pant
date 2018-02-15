@@ -1,6 +1,7 @@
 .menu__container {
   position: relative;
   margin-bottom: 1px;
+  cursor: default;
 }
 
 .menu__button {
@@ -46,7 +47,6 @@
   padding: 1px 3px;
   margin: 2px;
   white-space: nowrap;
-  cursor: default;
   &:hover {
     background: #007;
     color: #fff;
