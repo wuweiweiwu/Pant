@@ -1,9 +1,7 @@
 .tool {
   display: block !important;
   box-sizing: border-box;
-  -moz-box-sizing: border-box;
   position: relative;
-
   margin: 0;
   padding: 0;
   width: 25px;
@@ -14,16 +12,10 @@
   background: transparent;
   outline: 0;
 
-  image-rendering: pixelated;
-
   &:before {
+    @include position(0px, 0px, 0px, 0px);
     content: ' ';
-    position: absolute;
     z-index: 1;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
     border-top: 1px solid white;
     border-left: 1px solid white;
     border-right: 1px solid #7b7b7b;
@@ -31,11 +23,8 @@
   }
 
   &.tool--selected {
+    @include position(0px, 0px, 0px, 0px);
     padding-bottom: 2px;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
     border-top: 1px solid black;
     border-left: 1px solid black;
     border-right: 1px solid white;
@@ -45,10 +34,7 @@
   }
 
   &.tool--selected:before {
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
+    @include position(0px, 0px, 0px, 0px);
     border-top: 1px solid #7b7b7b;
     border-left: 1px solid #7b7b7b;
     border-right: 1px solid #bdbdbd;

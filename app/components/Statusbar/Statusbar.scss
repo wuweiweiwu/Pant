@@ -3,7 +3,7 @@
   font-size: 12px;
   padding: 3px 2px;
   padding-top: 4px;
-  border-top: 1px solid #7b7b7b;
+  @include border(#7b7b7b, '','','');
   outline: 1px solid #7b7b7b;
   outline-offset: 1px;
   overflow: hidden;
@@ -11,19 +11,19 @@
   cursor: default;
   height: 1.25em;
   flex: 0 0 auto;
-}
 
-.statusbar__status {
-  flex-basis: auto;
-  flex-grow: 1;
-  flex-shrink: 0;
-  padding-right: 2px;
-  overflow: hidden;
-}
+  .statusbar__status {
+    flex-basis: auto;
+    flex-grow: 1;
+    flex-shrink: 0;
+    padding-right: 2px;
+    overflow: hidden;
+  }
 
-.statusbar__coordinates {
-  flex: 0 0 114px;
-  min-width: 0px;
-  padding-left: 3px;
-  border-left: 1px solid #7b7b7b;
+  .statusbar__coordinates {
+    flex: 0 0 114px;
+    min-width: 0px;
+    padding-left: 3px;
+    border-left: 1px solid #7b7b7b;
+  }
 }

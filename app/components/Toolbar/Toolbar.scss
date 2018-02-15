@@ -11,10 +11,7 @@
   width: 41px;
   height: 66px;
   box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  border: 1px solid white;
-  border-top-color: #7b7b7b;
-  border-left-color: #7b7b7b;
+  @include border(#7b7b7b, #7b7b7b, white, white);
 }
 
 .tool__options {

@@ -7,58 +7,39 @@
   width: 15px;
   height: 15px;
   border: 0;
+
   & > canvas {
     pointer-events: none;
   }
 }
 
 .picker__cell {
-  border-top: 1px solid #fff;
-  border-left: 1px solid #fff;
-  border-right: 1px solid #7b7b7b;
-  border-bottom: 1px solid #7b7b7b;
+  @include border(#fff, #fff, #7b7b7b,#7b7b7b);
+
   &:before {
     content: '';
-    position: absolute;
-    left: 1px;
-    top: 1px;
-    right: 1px;
-    bottom: 1px;
+    @include position(1px, 1px, 1px, 1px);
   }
+
   &:after {
     content: '';
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    border: 1px solid #bbb;
+    @include position(0px, 0px, 0px, 0px);
+    @include border(#bbb, #bbb, #bbb, #bbb);
   }
 }
 
 .palette__cell {
-  border-top: 1px solid #7b7b7b;
-  border-left: 1px solid #7b7b7b;
-  border-right: 1px solid #bbbbbb;
-  border-bottom: 1px solid #bbbbbb;
+  @include border(#7b7b7b, #7b7b7b, #bbbbbb, #bbbbbb);
+
   &:before {
+    @include position(0px, 0px, 0px, 0px);
+    @include border(black, black, '', '');
     content: '';
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    border-left: 1px solid black;
-    border-top: 1px solid black;
   }
+
   &:after {
+    @include position(-1px, -1px, -2px, -2px);
+    @include border('', '', white, white);
     content: '';
-    position: absolute;
-    left: -1px;
-    top: -1px;
-    right: -2px;
-    bottom: -2px;
-    border-right: 1px solid white;
-    border-bottom: 1px solid white;
   }
 }
