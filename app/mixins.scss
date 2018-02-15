@@ -1,0 +1,22 @@
+@mixin position($top, $left, $right, $bottom) {
+  position: absolute;
+  top: $top;
+  left: $left;
+  right: $right;
+  bottom: $bottom;
+}
+
+@mixin border($top:'', $left:'', $right:'', $bottom:'') {
+  @if $top != '' {
+    border-top: 1px solid $top;
+  }
+  @if $left != '' {
+    border-left: 1px solid $left;
+  }
+  @if $right != '' {
+    border-right: 1px solid $right;
+  }
+  @if $bottom != '' {
+    border-bottom: 1px solid $bottom;
+  }
+}
