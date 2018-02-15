@@ -53,7 +53,6 @@ app.on('ready', async () => {
   }
 
   mainWindow = new BrowserWindow({
-    frame: false,
     show: false,
     width: 1024,
     height: 728
