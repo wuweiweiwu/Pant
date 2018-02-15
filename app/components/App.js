@@ -5,6 +5,7 @@ import Menubar from './Menubar';
 import Toolbar from './Toolbar';
 import Canvas from './Canvas';
 import Colorbar from './Colorbar';
+import Statusbar from './Statusbar';
 
 import styles from './App.scss';
 
@@ -25,6 +26,7 @@ export default class App extends React.Component<Props> {
             <Canvas />
           </div>
           <Colorbar />
+          <Statusbar />
         </div>
       </div>
     );
