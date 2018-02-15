@@ -4,7 +4,7 @@ import styles from './Menubar.scss';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { openMenu, closeMenu, FILE, EDIT } from '../../actions/menubar';
+import { openMenu, closeMenu, FILE, EDIT } from '../../actions/menu';
 
 class MenuBar extends Component {
   render() {

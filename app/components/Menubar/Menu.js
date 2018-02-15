@@ -115,4 +115,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Menu);
+export default connect(mapStateToProps, undefined)(Menu);
