@@ -7,6 +7,7 @@ import rootReducer from '../reducers';
 // import * as counterActions from '../actions/counter';
 // import type { counterStateType } from '../reducers/counter';
 import * as menuActions from '../actions/menu';
+import * as colorActions from '../actions/color';
 
 const history = createHashHistory();
 
@@ -35,7 +36,8 @@ const configureStore = (initialState?: counterStateType) => {
 
   // Redux DevTools Configuration
   const actionCreators = {
-    ...menuActions
+    ...menuActions,
+    ...colorActions
     // ...counterActions,
     // ...routerActions
   };

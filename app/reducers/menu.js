@@ -1,8 +1,8 @@
 import { FOCUS_MENU, LEAVE_MENU, FILE, EDIT } from '../actions/menu';
 
-const INIT = { file: false, edit: false, active: false };
+const init = { file: false, edit: false, active: false };
 
-export default function reducer(state = INIT, action) {
+export default function reducer(state = init, action) {
   switch (action.type) {
     case FOCUS_MENU:
       switch (action.menu) {
