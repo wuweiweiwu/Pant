@@ -3,15 +3,7 @@
   width: 254px;
   align-items: center;
   margin-left: 2px;
-
-  input {
-    margin: 0;
-    padding: 0;
-    height: 0px;
-    width: 0px;
-    opacity: 0;
-    pointer-events: none;
-  }
+  cursor: default;
 
   .colorbar__switcher {
     @include border(#7b7b7b, #7b7b7b, #bbbbbb, #bbbbbb);
