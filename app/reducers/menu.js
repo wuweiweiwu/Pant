@@ -24,7 +24,7 @@ export default function reducer(state = init, action) {
           return state;
       }
     case LEAVE_MENU:
-      return INIT;
+      return init;
     default:
       return state;
   }
