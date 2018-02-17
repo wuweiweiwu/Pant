@@ -40,19 +40,21 @@ yarn dev
 
 ### Color Palette
 
-* [ ] `left click` to change primary
-* [ ] `right click` to change secondary
-* [ ] <kbd>Ctrl</kbd> `left click` to change tertiary
-* [ ] `double click` to pull up `<input type="color"/>`
+* [x] `left click` to change primary
+* [x] `right click` to change secondary
+* [x] <kbd>Ctrl</kbd> `left click` to change tertiary
+* [x] `double click` to pull up `<input type="color"/>` (debounced for `change`)
 
 ### Menu
 
-* [ ] File
-* [ ] Edit
-* [ ] View
-* [ ] Image
-* [ ] Colors
-* [ ] Help
+* [x] File
+* [x] Edit
+* [x] View
+* [x] Image
+* [x] Colors
+* [x] Help
+* [x] Implement nested menus
+* [ ] Implement functions
 
 ### Status bar
 
@@ -69,3 +71,5 @@ yarn dev
 * [ ] Image Scaling (<kbd>Ctrl+Shift</kbd> <kbd>+</kbd> & <kbd>-</kbd> on the Numpad to scale the selection by factors of 2)
 * [ ] Color Replacement (right mouse button with Eraser to selectively replace the foreground color with the background color)
 * [ ] The Grid (<kbd>Ctrl+G</kbd> & Zoom to 6x+)
+* [ ] Add [Redux Undo](https://github.com/omnidan/redux-undo) for canvas undos
+* [ ] Add [Electron Redux](https://github.com/hardchor/electron-redux) to communicate with the main process
