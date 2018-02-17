@@ -1,28 +1,20 @@
-import { FOCUS_MENU, LEAVE_MENU, FILE, EDIT } from '../actions/menu';
+import { FOCUS_MENU, LEAVE_MENU } from '../actions/menu';
 
-const init = { file: false, edit: false, active: false };
+const init = {
+  active: undefined,
+
+  // menu is pressed
+  pressed: false
+};
 
 export default function reducer(state = init, action) {
   switch (action.type) {
     case FOCUS_MENU:
-      switch (action.menu) {
-        case FILE:
-          return {
-            ...state,
-            active: true,
-            edit: false,
-            file: true
-          };
-        case EDIT:
-          return {
-            ...state,
-            active: true,
-            edit: true,
-            file: false
-          };
-        default:
-          return state;
-      }
+      return {
+        ...state,
+        active: action.menu,
+        pressed: true
+      };
     case LEAVE_MENU:
       return init;
     default:
