@@ -3,6 +3,7 @@ import {
   CHANGE_SECONDARY,
   CHANGE_TERTIARY,
   CHANGE_PALETTE,
+  CHANGE_PALETTE_INDEX,
   SWAP_PRIMARY_SECONDARY
 } from '../actions/color';
 
@@ -41,6 +42,7 @@ const init = {
   primary: 'black',
   secondary: 'white',
   tertiary: undefined,
+  index: undefined,
   palette
 };
 
@@ -64,7 +66,12 @@ export default function reducer(state = init, action) {
     case CHANGE_PALETTE:
       return {
         ...state,
-        palette: Object.assign([], state.palette, { [action.index]: action.color })
+        palette: Object.assign([], state.palette, { [state.index]: action.color })
+      };
+    case CHANGE_PALETTE_INDEX:
+      return {
+        ...state,
+        index: action.index
       };
     case SWAP_PRIMARY_SECONDARY:
       return {

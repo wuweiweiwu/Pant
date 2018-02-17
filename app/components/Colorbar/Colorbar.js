@@ -10,6 +10,7 @@ import {
   changeSecondary,
   changeTertiary,
   changePalette,
+  changePaletteIndex,
   swapPrimarySecondary
 } from '../../actions/color';
 
@@ -35,8 +36,11 @@ class Colorbar extends Component {
       changeSecondary,
       changeTertiary,
       swapPrimarySecondary,
-      changePalette
+      changePalette,
+      changePaletteIndex
     } = this.props;
+
+    let debounce;
 
     return (
       <div className={styles.colorbar}>
@@ -96,28 +100,25 @@ class Colorbar extends Component {
               }}
               onDoubleClick={e => {
                 e.preventDefault();
-                const colorChanger = document.createElement('input');
-                colorChanger.setAttribute('type', 'color');
-                colorChanger.setAttribute('value', color);
-                colorChanger.click();
-                let timeout;
-                let currColor;
-                colorChanger.addEventListener('change', e => {
-                  clearInterval(timeout);
-                  currColor = e.target.value;
-                  // timeout = setTimeout(() => console.log('change:', currColor), 100);
-                  timeout = setTimeout(() => {
-                    changePalette(index, currColor);
-                    changePrimary(currColor);
-                  }, 100);
-                  // console.log('change:', e.target.value);
-                  // changePalette(index, e.target.value);
-                  // changePrimary(e.target.value);
-                });
+                changePaletteIndex(index);
+                this.input.value = color;
+                this.input.click();
               }}
             />
           ))}
         </div>
+        <input
+          type="color"
+          ref={input => (this.input = input)}
+          onChange={e => {
+            e.persist();
+            clearInterval(debounce);
+            debounce = setTimeout(() => {
+              changePalette(e.target.value);
+              changePrimary(e.target.value);
+            }, 200);
+          }}
+        />
       </div>
     );
   }
@@ -139,6 +140,7 @@ function mapDispatchToProps(dispatch) {
       changeSecondary,
       changeTertiary,
       changePalette,
+      changePaletteIndex,
       swapPrimarySecondary
     },
     dispatch
