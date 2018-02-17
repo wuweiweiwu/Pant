@@ -7,9 +7,11 @@
     padding: 2px 5px;
     position: relative;
     outline: 0;
+
     &:hover {
       box-shadow: 1px 1px 0 white inset, -1px -1px 0 #707070 inset;
     }
+
     &.menu__button--active {
       box-shadow: 1px 1px 0 #707070 inset, -1px -1px 0 white inset !important;
       top: 1px;
@@ -29,7 +31,8 @@
     @include border(#c0c0c0, #c0c0c0, #000, #000);
     box-shadow: 1px 1px 0 white inset, -1px -1px 0 #707070 inset;
 
-    &.menu__popup--disabled {
+    &.menu__popup--disabled,
+    &.menu__popup--nested {
       display: none;
     }
 
@@ -52,6 +55,50 @@
         margin: 2px;
         white-space: nowrap;
 
+        svg {
+          fill: black;
+        }
+
+        &:hover {
+          background: #007;
+          color: #fff;
+          text-shadow: none;
+          outline: 0;
+
+          /**** reset for nested popups ****/
+          .menu__popup--nested {
+            display: block;
+            position: absolute;
+            top: 70%;
+            left: 99.9%;
+
+            .menu__item {
+              color: black;
+
+              &:hover {
+                background: #007;
+                color: #fff;
+                text-shadow: none;
+                outline: 0;
+              }
+
+              &[disabled] {
+                color: #808080;
+                text-shadow: 0.8px 0.8px 0px #fff;
+
+                &:hover {
+                  text-shadow: none;
+                }
+              }
+            }
+          }
+          /**** super hacky lol ****/
+
+          svg {
+            fill: white;
+          }
+        }
+
         .menu__item__checkbox,
         .menu__item__submenu {
           min-width: 16px;
@@ -60,13 +107,6 @@
 
         .menu__item__label,
         .menu__item_shortcut {
-        }
-
-        &:hover {
-          background: #007;
-          color: #fff;
-          text-shadow: none;
-          outline: 0;
         }
 
         &[disabled] {
