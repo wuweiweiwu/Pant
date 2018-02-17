@@ -48,18 +48,26 @@ class ColorCell extends Component<Props> {
   }
 
   render() {
-    const {
-      style, picker, onClick, color
-    } = this.props;
+    const { style, picker, onClick } = this.props;
 
     return (
       <div
+        role="button"
+        tabIndex={0}
         className={classNames({ [styles.picker__cell]: picker, [styles.palette__cell]: !picker })}
         style={style}
         onClick={onClick}
-        ref={div => (this.div = div)}
+        ref={div => {
+          this.div = div;
+        }}
       >
-        <canvas ref={cv => (this.canvas = cv)} height="13px" width="13px" />
+        <canvas
+          ref={cv => {
+            this.canvas = cv;
+          }}
+          height="13px"
+          width="13px"
+        />
       </div>
     );
   }

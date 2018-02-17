@@ -36,6 +36,8 @@ class Menu extends Component {
     return (
       <div className={styles.menu__container}>
         <div
+          role="button"
+          tabIndex={0}
           className={classNames({
             [styles.menu__button]: true,
             [styles['menu__button--active']]: isOpen
