@@ -1,5 +1,5 @@
+// @flow
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import uuid from 'uuid/v1';
 
 import { bindActionCreators } from 'redux';
@@ -17,7 +17,23 @@ import {
 import ColorCell from './ColorCell';
 import styles from './Colorbar.scss';
 
-class Colorbar extends Component {
+type Props = {
+  primary: string,
+  secondary: string,
+  tertiary?: string,
+  palette: Array<string>,
+  changePrimary: string => void,
+  changeSecondary: string => void,
+  changeTertiary: string => void,
+  swapPrimarySecondary: () => void,
+  changePalette: string => void,
+  changePaletteIndex: number => void
+};
+
+class Colorbar extends Component<Props> {
+  canvas: ?HTMLCanvasElement;
+  input: ?HTMLInputElement;
+
   componentDidUpdate() {
     const { tertiary } = this.props;
     if (this.canvas && tertiary) {
@@ -40,7 +56,7 @@ class Colorbar extends Component {
       changePaletteIndex
     } = this.props;
 
-    let debounce;
+    let debounce: TimeoutID;
 
     return (
       <div className={styles.colorbar}>
@@ -101,8 +117,10 @@ class Colorbar extends Component {
               onDoubleClick={e => {
                 e.preventDefault();
                 changePaletteIndex(index);
-                this.input.value = color;
-                this.input.click();
+                if (this.input) {
+                  this.input.value = color;
+                  this.input.click();
+                }
               }}
             />
           ))}
@@ -112,7 +130,7 @@ class Colorbar extends Component {
           ref={input => (this.input = input)}
           onChange={e => {
             e.persist();
-            clearInterval(debounce);
+            clearTimeout(debounce);
             debounce = setTimeout(() => {
               changePalette(e.target.value);
               changePrimary(e.target.value);

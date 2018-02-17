@@ -1,9 +1,22 @@
+// @flow
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
 import styles from './ColorCell.scss';
 
-class ColorCell extends Component {
+type Props = {
+  color: string,
+  onContextMenu: Event => void,
+  onDoubleClick?: Event => void,
+  onClick: Event => void,
+  style?: {},
+  picker?: boolean
+};
+
+class ColorCell extends Component<Props> {
+  canvas: ?HTMLCanvasElement;
+  div: ?HTMLDivElement;
+
   componentDidMount() {
     const { color, onContextMenu, onDoubleClick } = this.props;
 
@@ -13,14 +26,14 @@ class ColorCell extends Component {
       ctx.fillRect(0, 0, 13, 13);
     }
 
+    // right click and control click handler
     if (this.div) {
-      // right click and control click handler
       this.div.addEventListener('contextmenu', onContextMenu);
+    }
 
-      // double click handler
-      if (onDoubleClick) {
-        this.div.addEventListener('dblclick', onDoubleClick);
-      }
+    // double click handler
+    if (onDoubleClick && this.div) {
+      this.div.addEventListener('dblclick', onDoubleClick);
     }
   }
 
