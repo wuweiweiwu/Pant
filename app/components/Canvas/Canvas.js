@@ -56,8 +56,10 @@ class Canvas extends Component<Props> {
     }
 
     // in the case where there is overflowed
-    const newWidth = clientX - offsetLeft + state.scrollLeft;
-    const newHeight = clientY - offsetTop + state.scrollTop;
+    let newWidth = clientX - offsetLeft + state.scrollLeft - 5,
+      newHeight = clientY - offsetTop + state.scrollTop - 5;
+    newWidth = Math.max(newWidth, 1);
+    newHeight = Math.max(newHeight, 1);
 
     if (state.pressed) {
       switch (state.resizeDirection) {
