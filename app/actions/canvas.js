@@ -1,4 +1,5 @@
 export const RESIZE = 'RESIZE';
+export const RESIZE_TEMP = 'RESIZE_TEMP';
 export const PRESSED = 'PRESSED';
 export const UNPRESSED = 'UNPRESSSED';
 export const RESIZE_DIRECTION = 'RESIZE_DIRECTION';
@@ -8,9 +9,15 @@ export const HORIZONTAL = 'HORIZONTAL';
 export const VERTICAL = 'VERTICAL';
 export const DIAGONAL = 'DIAGONAL';
 
-export function resize(width, height) {
+export function resize() {
   return {
-    type: RESIZE,
+    type: RESIZE
+  };
+}
+
+export function resizeTemp(width, height) {
+  return {
+    type: RESIZE_TEMP,
     width,
     height
   };

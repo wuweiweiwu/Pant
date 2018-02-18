@@ -10,6 +10,7 @@ import Handle from './Handle';
 
 import {
   resize,
+  resizeTemp,
   press,
   unPress,
   setResizeDirection,
@@ -27,6 +28,7 @@ class Canvas extends Component {
       tempWidth,
       tempHeight,
       resize,
+      resizeTemp,
       resizeDirection,
       pressed,
       press,
@@ -48,13 +50,13 @@ class Canvas extends Component {
           if (pressed) {
             switch (resizeDirection) {
               case HORIZONTAL:
-                resize(newWidth, height);
+                resizeTemp(newWidth, height);
                 break;
               case VERTICAL:
-                resize(width, newHeight);
+                resizeTemp(width, newHeight);
                 break;
               case DIAGONAL:
-                resize(newWidth, newHeight);
+                resizeTemp(newWidth, newHeight);
                 break;
               default:
                 break;
@@ -63,6 +65,7 @@ class Canvas extends Component {
         }}
         onMouseUp={() => {
           if (pressed) {
+            resize();
             unPress();
           }
         }}
@@ -136,6 +139,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       resize,
+      resizeTemp,
       press,
       unPress,
       setResizeDirection,

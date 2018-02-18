@@ -1,5 +1,6 @@
 import {
   RESIZE,
+  RESIZE_TEMP,
   PRESSED,
   UNPRESSED,
   RESIZE_DIRECTION,
@@ -21,6 +22,12 @@ export default function reducer(state = init, action) {
     case RESIZE:
       return {
         ...state,
+        width: state.tempWidth,
+        height: state.tempHeight
+      };
+    case RESIZE_TEMP:
+      return {
+        ...state,
         tempWidth: action.width,
         tempHeight: action.height
       };
@@ -32,8 +39,6 @@ export default function reducer(state = init, action) {
     case UNPRESSED:
       return {
         ...state,
-        width: state.tempWidth,
-        height: state.tempHeight,
         pressed: false
       };
     case RESIZE_DIRECTION:
