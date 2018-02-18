@@ -15,25 +15,14 @@ type Props = {
 
 class ColorCell extends Component<Props> {
   canvas: ?HTMLCanvasElement;
-  div: ?HTMLDivElement;
 
   componentDidMount() {
-    const { color, onContextMenu, onDoubleClick } = this.props;
+    const { color } = this.props;
 
     if (this.canvas) {
       const ctx = this.canvas.getContext('2d');
       ctx.fillStyle = color;
       ctx.fillRect(0, 0, 13, 13);
-    }
-
-    // right click and control click handler
-    if (this.div) {
-      this.div.addEventListener('contextmenu', onContextMenu);
-    }
-
-    // double click handler
-    if (onDoubleClick && this.div) {
-      this.div.addEventListener('dblclick', onDoubleClick);
     }
   }
 
@@ -48,7 +37,9 @@ class ColorCell extends Component<Props> {
   }
 
   render() {
-    const { style, picker, onClick } = this.props;
+    const {
+      style, picker, onClick, onContextMenu, onDoubleClick
+    } = this.props;
 
     return (
       <div
@@ -57,9 +48,8 @@ class ColorCell extends Component<Props> {
         className={classNames({ [styles.picker__cell]: picker, [styles.palette__cell]: !picker })}
         style={style}
         onClick={onClick}
-        ref={div => {
-          this.div = div;
-        }}
+        onContextMenu={onContextMenu}
+        onDoubleClick={onDoubleClick}
       >
         <canvas
           ref={cv => {
