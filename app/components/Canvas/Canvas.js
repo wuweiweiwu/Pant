@@ -21,52 +21,61 @@ import {
 } from '../../actions/canvas';
 
 class Canvas extends Component {
+  // event listeners bound to document to do the resize functionality
+  documentMouseMove(e) {
+    const offsetTop = 18;
+    const offsetLeft = 56;
+
+    const { canvas: state } = window.store.getState();
+
+    let clientX = e.clientX,
+      clientY = e.clientY;
+
+    if (clientX < offsetLeft) {
+      clientX = offsetLeft;
+    }
+
+    if (clientY < offsetTop) {
+      clientY = offsetTop;
+    }
+
+    // in the case where there is overflowed
+    const newWidth = clientX - offsetLeft + state.scrollLeft;
+    const newHeight = clientY - offsetTop + state.scrollTop;
+
+    if (state.pressed) {
+      switch (state.resizeDirection) {
+        case HORIZONTAL:
+          window.store.dispatch(resizeTemp(newWidth, state.height));
+          break;
+        case VERTICAL:
+          window.store.dispatch(resizeTemp(state.width, newHeight));
+          break;
+        case DIAGONAL:
+          window.store.dispatch(resizeTemp(newWidth, newHeight));
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+  documentMouseUp(e) {
+    const { canvas: state } = window.store.getState();
+    if (state.pressed) {
+      window.store.dispatch(resize());
+      window.store.dispatch(unPress());
+    }
+  }
+
   componentDidMount() {
-    document.addEventListener('mousemove', e => {
-      const offsetTop = 18;
-      const offsetLeft = 56;
+    document.addEventListener('mousemove', this.documentMouseMove);
+    document.addEventListener('mouseup', this.documentMouseUp);
+  }
 
-      const { canvas: state } = window.store.getState();
-
-      let clientX = e.clientX,
-        clientY = e.clientY;
-
-      if (clientX < offsetLeft) {
-        clientX = offsetLeft;
-      }
-
-      if (clientY < offsetTop) {
-        clientY = offsetTop;
-      }
-
-      // in the case where there is overflowed
-      const newWidth = clientX - offsetLeft + state.scrollLeft;
-      const newHeight = clientY - offsetTop + state.scrollTop;
-
-      if (state.pressed) {
-        switch (state.resizeDirection) {
-          case HORIZONTAL:
-            window.store.dispatch(resizeTemp(newWidth, state.height));
-            break;
-          case VERTICAL:
-            window.store.dispatch(resizeTemp(state.width, newHeight));
-            break;
-          case DIAGONAL:
-            window.store.dispatch(resizeTemp(newWidth, newHeight));
-            break;
-          default:
-            break;
-        }
-      }
-    });
-
-    document.addEventListener('mouseup', () => {
-      const { canvas: state } = window.store.getState();
-      if (state.pressed) {
-        window.store.dispatch(resize());
-        window.store.dispatch(unPress());
-      }
-    });
+  componentWillUnmount() {
+    document.removeEventListener('mousemove', this.documentMouseMove);
+    document.removeEventListener('mouseup', this.documentMouseUp);
   }
 
   render() {
