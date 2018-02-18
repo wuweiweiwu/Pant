@@ -18,7 +18,7 @@ class Tool extends Component {
             top: 0,
             width: 24,
             height: 24,
-            backgroundImage: `url(${require('./images/toolbar-icons.png')})`,
+            backgroundImage: `url(${require('../../images/toolbar-icons.png')})`,
             backgroundPosition: `${offsetX}px ${-offsetY}px`
           }}
         />

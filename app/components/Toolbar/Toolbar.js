@@ -10,7 +10,7 @@ import styles from './Toolbar.scss';
 class ToolBox extends Component {
   render() {
     const getCursor = cursor_def => {
-      const url = require(`./images/cursors/${cursor_def[0]}.png`);
+      const url = require(`../../images/cursors/${cursor_def[0]}.png`);
       return `url(${url}) ${cursor_def[1].join(' ')}, ${cursor_def[2]}`;
     };
 
