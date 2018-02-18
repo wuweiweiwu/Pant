@@ -1,9 +1,19 @@
+// @flow
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
 import styles from './Handle.scss';
 
-class Handle extends Component {
+type Props = {
+  x: number,
+  y: number,
+  useless?: boolean,
+  pressed?: boolean,
+  cursor?: string,
+  onMouseDown?: Event => void
+};
+
+class Handle extends Component<Props> {
   render() {
     const {
       x, y, useless, cursor, pressed, onMouseDown

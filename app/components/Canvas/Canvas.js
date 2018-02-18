@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import uuid from 'uuid/v1';
@@ -20,9 +21,24 @@ import {
   DIAGONAL
 } from '../../actions/canvas';
 
-class Canvas extends Component {
+type Props = {
+  width: number,
+  height: number,
+  tempWidth: number,
+  tempHeight: number,
+  pressed: boolean,
+  resizeDirection: string,
+  resize: () => void,
+  resizeTemp: (number, number) => void,
+  press: () => void,
+  unPress: () => void,
+  setResizeDirection: string => void,
+  setScrollOffsets: (number, number) => void
+};
+
+class Canvas extends Component<Props> {
   // event listeners bound to document to do the resize functionality
-  documentMouseMove(e) {
+  documentMouseMove(e: MouseEvent) {
     const offsetTop = 18;
     const offsetLeft = 56;
 
@@ -60,7 +76,7 @@ class Canvas extends Component {
     }
   }
 
-  documentMouseUp(e) {
+  documentMouseUp(e: MouseEvent) {
     const { canvas: state } = window.store.getState();
     if (state.pressed) {
       window.store.dispatch(resize());

@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import uuid from 'uuid/v1';
@@ -27,7 +28,27 @@ export function embedHotkey(str: string) {
   return arr;
 }
 
-class Menu extends Component {
+export type Item =
+  | {
+      item: string,
+      shortcut?: string,
+      disabled?: boolean,
+      checkbox?: boolean,
+      description?: string,
+      submenu?: Array<Item>
+    }
+  | string;
+
+type Props = {
+  title: string,
+  items: Array<Item>,
+  pressed?: boolean,
+  isOpen: boolean,
+  openMenu: () => void,
+  closeMenu: () => void
+};
+
+class Menu extends Component<Props> {
   render() {
     const {
       title, items, pressed, isOpen, openMenu, closeMenu

@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import Menu from './Menu';
 import styles from './Menubar.scss';
@@ -8,7 +9,14 @@ import { openMenu, closeMenu, FILE, EDIT, VIEW, IMAGE, COLORS, HELP } from '../.
 
 import { fileItems, editItems, viewItems, imageItems, colorItems, helpItems } from './items';
 
-class MenuBar extends Component {
+type Props = {
+  active?: string,
+  pressed: boolean,
+  openMenu: string => void,
+  closeMenu: () => void
+};
+
+class MenuBar extends Component<Props> {
   render() {
     const {
       active, pressed, openMenu, closeMenu
