@@ -6,7 +6,7 @@ import styles from './Handle.scss';
 class Handle extends Component {
   render() {
     const {
-      x, y, useless, cursor
+      x, y, useless, cursor, pressed, onMouseDown
     } = this.props;
 
     const style = {
@@ -22,6 +22,7 @@ class Handle extends Component {
           [styles['handle--useless']]: useless
         })}
         style={style}
+        onMouseDown={onMouseDown}
       />
     );
   }

@@ -12,4 +12,11 @@
     /* 16px is a common grid size, but that gives 8px grid cells, and our max zoom is 8x */
     background-size: 8px;
   }
+  .resize {
+    outline: 1px dotted black;
+    pointer-events: none;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+  }
 }

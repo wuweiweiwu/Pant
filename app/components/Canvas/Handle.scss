@@ -6,7 +6,6 @@
   background: #000080;
 
   &.handle--useless {
-    touch-action: none;
     background: #fff;
     box-shadow: 1px 1px 0 #000080 inset;
   }

@@ -8,25 +8,114 @@ import { connect } from 'react-redux';
 import styles from './Canvas.scss';
 import Handle from './Handle';
 
-import { resize } from '../../actions/canvas';
+import {
+  resize,
+  press,
+  unPress,
+  setResizeDirection,
+  cancelResize,
+  VERTICAL,
+  HORIZONTAL,
+  DIAGONAL
+} from '../../actions/canvas';
 
 class Canvas extends Component {
   render() {
-    const { x, y } = this.props;
+    const {
+      width,
+      height,
+      tempWidth,
+      tempHeight,
+      resize,
+      resizeDirection,
+      pressed,
+      press,
+      unPress,
+      setResizeDirection,
+      cancelResize
+    } = this.props;
 
     return (
-      <div className={styles.canvas__area}>
-        <canvas width={x} height={y} />
+      <div
+        className={styles.canvas__area}
+        onMouseMove={e => {
+          const offsetTop = 18;
+          const offsetLeft = 56;
+
+          const newWidth = e.clientX - offsetLeft;
+          const newHeight = e.clientY - offsetTop;
+
+          if (pressed) {
+            switch (resizeDirection) {
+              case HORIZONTAL:
+                resize(newWidth, height);
+                break;
+              case VERTICAL:
+                resize(width, newHeight);
+                break;
+              case DIAGONAL:
+                resize(newWidth, newHeight);
+                break;
+              default:
+                break;
+            }
+          }
+        }}
+        onMouseUp={() => {
+          if (pressed) {
+            unPress();
+          }
+        }}
+        onMouseLeave={() => {
+          if (pressed) {
+            cancelResize();
+          }
+        }}
+      >
+        <canvas width={width} height={height} />
         <Handle x={0} y={0} useless />
-        <Handle x={0} y={y / 2 + 1.5} useless />
-        <Handle x={0} y={y + 3} useless />
-        <Handle x={x / 2 + 1.5} y={0} useless />
-        <Handle x={x + 3} y={0} useless />
+        <Handle x={0} y={height / 2 + 1.5} useless />
+        <Handle x={0} y={height + 3} useless />
+        <Handle x={width / 2 + 1.5} y={0} useless />
+        <Handle x={width + 3} y={0} useless />
 
         {/* not useless handles */}
-        <Handle x={x + 3} y={y / 2 + 1.5} cursor="ew-resize" />
-        <Handle x={x / 2 + 1.5} y={y + 3} cursor="ns-resize" />
-        <Handle x={x + 3} y={y + 3} cursor="nwse-resize" />
+        <Handle
+          x={width + 3}
+          y={height / 2 + 1.5}
+          cursor="ew-resize"
+          onMouseDown={() => {
+            press();
+            setResizeDirection(HORIZONTAL);
+          }}
+        />
+        <Handle
+          x={width / 2 + 1.5}
+          y={height + 3}
+          cursor="ns-resize"
+          onMouseDown={() => {
+            press();
+            setResizeDirection(VERTICAL);
+          }}
+        />
+        <Handle
+          x={width + 3}
+          y={height + 3}
+          cursor="nwse-resize"
+          onMouseDown={() => {
+            press();
+            setResizeDirection(DIAGONAL);
+          }}
+        />
+        {pressed && (
+          <div
+            className={styles.resize}
+            style={{
+              width: `${tempWidth}px`,
+              height: `${tempHeight}px`
+            }}
+          />
+        )}
       </div>
     );
   }
@@ -34,15 +123,23 @@ class Canvas extends Component {
 
 function mapStateToProps(state) {
   return {
-    x: state.canvas.x,
-    y: state.canvas.y
+    width: state.canvas.width,
+    height: state.canvas.height,
+    tempWidth: state.canvas.tempWidth,
+    tempHeight: state.canvas.tempHeight,
+    pressed: state.canvas.pressed,
+    resizeDirection: state.canvas.resizeDirection
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      resize
+      resize,
+      press,
+      unPress,
+      setResizeDirection,
+      cancelResize
     },
     dispatch
   );
