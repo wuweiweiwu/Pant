@@ -1,0 +1,13 @@
+.handle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  z-index: 1;
+  background: #000080;
+
+  &.handle--useless {
+    touch-action: none;
+    background: #fff;
+    box-shadow: 1px 1px 0 #000080 inset;
+  }
+}
