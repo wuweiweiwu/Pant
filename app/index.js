@@ -7,6 +7,9 @@ import './app.global.scss';
 
 const store = configureStore();
 
+// so event listeners bound to document can access it
+window.store = store;
+
 render(
   <AppContainer>
     <Root store={store} history={history} />
