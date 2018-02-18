@@ -1,10 +1,19 @@
-import { RESIZE } from '../actions/canvas';
+import {
+  RESIZE,
+  PRESSED,
+  UNPRESSED,
+  RESIZE_DIRECTION,
+  DIAGONAL,
+  CANCEL_RESIZE
+} from '../actions/canvas';
 
 const init = {
-  x: 200,
-  y: 200,
-  tempX: 200,
-  tempY: 200
+  width: 200,
+  height: 200,
+  tempWidth: 200,
+  tempHeight: 200,
+  pressed: false,
+  resizeDirection: DIAGONAL
 };
 
 export default function reducer(state = init, action) {
@@ -12,10 +21,32 @@ export default function reducer(state = init, action) {
     case RESIZE:
       return {
         ...state,
-        x: action.x,
-        y: action.y,
-        tempX: action.x,
-        tempY: action.y
+        tempWidth: action.width,
+        tempHeight: action.height
+      };
+    case PRESSED:
+      return {
+        ...state,
+        pressed: true
+      };
+    case UNPRESSED:
+      return {
+        ...state,
+        width: state.tempWidth,
+        height: state.tempHeight,
+        pressed: false
+      };
+    case RESIZE_DIRECTION:
+      return {
+        ...state,
+        resizeDirection: action.resizeDirection
+      };
+    case CANCEL_RESIZE:
+      return {
+        ...state,
+        tempWidth: state.width,
+        tempHeight: state.height,
+        pressed: false
       };
     default:
       return state;
