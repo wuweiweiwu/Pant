@@ -37,6 +37,9 @@ yarn dev
 
 * [ ] Drawing
 * [ ] Saving (to redux store?)
+* [x] resizing
+* [x] handles
+* [x] resizing past window boundary (document `mousemove` event)
 
 ### Color Palette
 
