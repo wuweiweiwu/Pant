@@ -1,6 +1,6 @@
 {
-  "name": "reactpaint",
-  "productName": "reactpaint",
+  "name": "Pant",
+  "productName": "Pant",
   "version": "0.0.1",
   "description": "Election + React port of jspaint",
   "main": "./main.prod.js",

@@ -1,6 +1,6 @@
 {
-  "name": "reactpaint",
-  "productName": "reactpaint",
+  "name": "Pant",
+  "productName": "Pant",
   "version": "0.0.1",
   "description": "Election + React port of jspaint",
   "scripts": {
@@ -32,8 +32,8 @@
   },
   "browserslist": "electron 1.6",
   "build": {
-    "productName": "reactpaint",
-    "appId": "org.develar.reactpaint",
+    "productName": "Pant",
+    "appId": "",
     "files": [
       "dist/",
       "node_modules/",
@@ -75,16 +75,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wuweiweiwu/reactpaint.git"
+    "url": "git+https://github.com/wuweiweiwu/Pant.git"
   },
   "author": {
     "name": "Wei-Wei Wu",
-    "email": "me@weiweiwu.me",
+    "email": "hello@weiweiwu.me",
     "url": "https://github.com/wuweiweiwu"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wuweiweiwu/reactpaint/issues"
+    "url": "https://github.com/wuweiweiwu/Pant/issues"
   },
   "keywords": [
     "electron",
@@ -97,7 +97,7 @@
     "hot",
     "reload"
   ],
-  "homepage": "https://github.com/wuweiweiwu/reactpaint#readme",
+  "homepage": "https://github.com/wuweiweiwu/Pant#readme",
   "jest": {
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",

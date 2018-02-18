@@ -1,4 +1,4 @@
-# reactpaint
+# Pant
 
 The React + Electron port of [jspaint](jspaint.ml) by [1j01](https://github.com/1j01)
 
