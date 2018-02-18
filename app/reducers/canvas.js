@@ -5,7 +5,7 @@ import {
   UNPRESSED,
   RESIZE_DIRECTION,
   DIAGONAL,
-  CANCEL_RESIZE
+  SET_SCROLL_OFFSETS
 } from '../actions/canvas';
 
 const init = {
@@ -14,7 +14,9 @@ const init = {
   tempWidth: 200,
   tempHeight: 200,
   pressed: false,
-  resizeDirection: DIAGONAL
+  resizeDirection: DIAGONAL,
+  scrollLeft: 0,
+  scrollTop: 0
 };
 
 export default function reducer(state = init, action) {
@@ -46,12 +48,11 @@ export default function reducer(state = init, action) {
         ...state,
         resizeDirection: action.resizeDirection
       };
-    case CANCEL_RESIZE:
+    case SET_SCROLL_OFFSETS:
       return {
         ...state,
-        tempWidth: state.width,
-        tempHeight: state.height,
-        pressed: false
+        scrollLeft: action.scrollLeft,
+        scrollTop: action.scrollTop
       };
     default:
       return state;

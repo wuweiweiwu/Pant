@@ -14,13 +14,61 @@ import {
   press,
   unPress,
   setResizeDirection,
-  cancelResize,
+  setScrollOffsets,
   VERTICAL,
   HORIZONTAL,
   DIAGONAL
 } from '../../actions/canvas';
 
 class Canvas extends Component {
+  componentDidMount() {
+    document.addEventListener('mousemove', e => {
+      const offsetTop = 18;
+      const offsetLeft = 56;
+
+      const { canvas: state } = window.store.getState();
+
+      let clientX = e.clientX,
+        clientY = e.clientY;
+
+      if (clientX < offsetLeft) {
+        clientX = offsetLeft;
+      }
+
+      if (clientY < offsetTop) {
+        clientY = offsetTop;
+      }
+
+      // in the case where there is overflowed
+      const newWidth = clientX - offsetLeft + state.scrollLeft;
+      const newHeight = clientY - offsetTop + state.scrollTop;
+
+      if (state.pressed) {
+        switch (state.resizeDirection) {
+          case HORIZONTAL:
+            window.store.dispatch(resizeTemp(newWidth, state.height));
+            break;
+          case VERTICAL:
+            window.store.dispatch(resizeTemp(state.width, newHeight));
+            break;
+          case DIAGONAL:
+            window.store.dispatch(resizeTemp(newWidth, newHeight));
+            break;
+          default:
+            break;
+        }
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      const { canvas: state } = window.store.getState();
+      if (state.pressed) {
+        window.store.dispatch(resize());
+        window.store.dispatch(unPress());
+      }
+    });
+  }
+
   render() {
     const {
       width,
@@ -34,45 +82,20 @@ class Canvas extends Component {
       press,
       unPress,
       setResizeDirection,
-      cancelResize
+      setScrollOffsets
     } = this.props;
 
     return (
       <div
         className={styles.canvas__area}
-        onMouseMove={e => {
-          const offsetTop = 18;
-          const offsetLeft = 56;
-
-          const newWidth = e.clientX - offsetLeft;
-          const newHeight = e.clientY - offsetTop;
-
-          if (pressed) {
-            switch (resizeDirection) {
-              case HORIZONTAL:
-                resizeTemp(newWidth, height);
-                break;
-              case VERTICAL:
-                resizeTemp(width, newHeight);
-                break;
-              case DIAGONAL:
-                resizeTemp(newWidth, newHeight);
-                break;
-              default:
-                break;
-            }
-          }
-        }}
         onMouseUp={() => {
           if (pressed) {
             resize();
             unPress();
           }
         }}
-        onMouseLeave={() => {
-          if (pressed) {
-            cancelResize();
-          }
+        onScroll={e => {
+          setScrollOffsets(e.target.scrollTop, e.target.scrollLeft);
         }}
       >
         <canvas width={width} height={height} />
@@ -143,7 +166,7 @@ function mapDispatchToProps(dispatch) {
       press,
       unPress,
       setResizeDirection,
-      cancelResize
+      setScrollOffsets
     },
     dispatch
   );
