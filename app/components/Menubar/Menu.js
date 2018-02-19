@@ -45,7 +45,11 @@ class Menu extends Component<Props> {
         >
           {embedHotkey(Object.keys(def)[0])}
         </div>
-        <Popup items={def[Object.keys(def)[0]]} isOpen={isCurrent && pressed} />
+        <Popup
+          items={def[Object.keys(def)[0]]}
+          isOpen={isCurrent && pressed}
+          closeMenu={closeMenu}
+        />
       </div>
     );
   }

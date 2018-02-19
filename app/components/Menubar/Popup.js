@@ -4,17 +4,19 @@ import uuid from 'uuid/v1';
 import classNames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import { type Item } from './menus';
 import styles from './Popup.scss';
 import { DIVIDER } from './menus';
-import { embedHotkey } from '../../utils/utils';
+import { embedHotkey, getSiblings } from '../../utils/utils';
 import { toggleCheckbox } from '../../actions/menu';
 
 type Props = {
   items: Array<Item>,
   isOpen?: boolean,
   nested?: boolean,
+  closeMenu: () => void,
 
   tool: boolean,
   color: boolean,
@@ -25,12 +27,59 @@ type Props = {
   thumbnail: boolean,
   opaque: boolean,
 
-  toggleCheckbox?: any => void
+  toggleCheckbox: any => void,
+
+  onLeaveDiv?: () => void,
+  onEnterDiv?: () => void
 };
 
-class Popup extends Component<Props> {
+type State = {
+  popupOpen: boolean,
+  inMain: boolean,
+  inNested: boolean
+};
+
+class Popup extends Component<Props, State> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      popupOpen: false,
+      inMain: false,
+      inNested: false
+    };
+  }
+
+  // get rid of the flashes in rendering
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      _.isEqual(this.state, {
+        popupOpen: true,
+        inMain: true,
+        inNested: true
+      }) &&
+      _.isEqual(nextState, {
+        popupOpen: true,
+        inMain: true,
+        inNested: false
+      })
+    ) {
+      return false;
+    }
+    return true;
+  }
+
   render() {
-    const { items, isOpen, nested, toggleCheckbox, ...rest } = this.props;
+    const {
+      items,
+      isOpen,
+      nested,
+      toggleCheckbox,
+      closeMenu,
+      onLeaveDiv,
+      onEnterDiv,
+      ...rest
+    } = this.props;
+    const { popupOpen, inMain, inNested } = this.state;
 
     return (
       <div
@@ -39,6 +88,24 @@ class Popup extends Component<Props> {
           [styles['menu__popup--disabled']]: !isOpen && !nested,
           [styles['menu__popup--nested']]: nested
         })}
+        onMouseEnter={() => {
+          if (onEnterDiv) {
+            onEnterDiv();
+          } else {
+            this.setState({
+              inMain: true
+            });
+          }
+        }}
+        onMouseLeave={() => {
+          if (onLeaveDiv) {
+            onLeaveDiv();
+          } else {
+            this.setState({
+              inMain: false
+            });
+          }
+        }}
       >
         <table className={styles.menu__popup__table}>
           <tbody>
@@ -46,12 +113,35 @@ class Popup extends Component<Props> {
               if (typeof item !== 'string') {
                 return (
                   <tr
-                    className={styles.menu__item}
                     key={uuid()}
+                    className={classNames({
+                      [styles.menu__item]: true,
+                      [styles['menu__item--highlight']]:
+                        popupOpen &&
+                        item.submenu &&
+                        ((inMain && inNested) || (!inMain && !inNested))
+                    })}
                     disabled={item.disabled}
                     onClick={() => {
+                      if (item.disabled) {
+                        return;
+                      }
                       if (item.checkbox && toggleCheckbox) {
                         toggleCheckbox(item.checkbox);
+                        closeMenu();
+                      }
+                    }}
+                    onMouseOver={() => {
+                      if (item.submenu && !popupOpen) {
+                        this.setState({ popupOpen: true });
+                      }
+                      if (!item.submenu && popupOpen) {
+                        this.setState({ popupOpen: false });
+                      }
+                    }}
+                    onMouseLeave={e => {
+                      if (item.submenu && popupOpen && inMain && !inNested) {
+                        this.setState({ popupOpen: false });
                       }
                     }}
                   >
@@ -79,12 +169,25 @@ class Popup extends Component<Props> {
                           >
                             <path d="M7.5 4.33L0 8.66L0 0z" />
                           </svg>
-                          <Popup
-                            items={item.submenu}
-                            nested
-                            toggleCheckbox={toggleCheckbox}
-                            {...rest}
-                          />
+                          {popupOpen && (
+                            <Popup
+                              nested
+                              items={item.submenu}
+                              toggleCheckbox={toggleCheckbox}
+                              closeMenu={closeMenu}
+                              onEnterDiv={() => {
+                                this.setState({
+                                  inNested: true
+                                });
+                              }}
+                              onLeaveDiv={() => {
+                                this.setState({
+                                  inNested: false
+                                });
+                              }}
+                              {...rest}
+                            />
+                          )}
                         </Fragment>
                       )}
                     </td>
