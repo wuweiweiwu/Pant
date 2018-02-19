@@ -6,38 +6,8 @@ import uuid from 'uuid/v1';
 import Popup from './Popup';
 
 import styles from './Menu.scss';
-
-export function embedHotkey(str: string) {
-  const arr = [];
-  arr.push(str.split('&')[0]);
-
-  let hotkey = null;
-  const index = str.indexOf('&');
-  if (index >= 0) {
-    hotkey = str[index + 1];
-  }
-  arr.push(hotkey ? (
-    <span className={styles.menu__hotkey} key={uuid()}>
-      {hotkey}
-    </span>
-  ) : null);
-
-  const second = str.split('&')[1];
-  arr.push(second ? second.substring(1) : null);
-
-  return arr;
-}
-
-export type Item =
-  | {
-      item: string,
-      shortcut?: string,
-      disabled?: boolean,
-      checkbox?: boolean,
-      description?: string,
-      submenu?: Array<Item>
-    }
-  | string;
+import { embedHotkey } from '../../utils/utils';
+import { type Item } from './items';
 
 type Props = {
   title: string,
