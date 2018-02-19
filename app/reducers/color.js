@@ -3,12 +3,12 @@ import {
   CHANGE_SECONDARY,
   CHANGE_TERTIARY,
   SWAP_PRIMARY_SECONDARY
-} from "../actions/color";
+} from '../actions/color';
 
 const init = {
-  primary: "black",
-  secondary: "white",
-  tertiary: "rgba(0, 0, 0, 0)"
+  primary: 'black',
+  secondary: 'white',
+  tertiary: 'rgba(0, 0, 0, 0)'
 };
 
 export default function reducer(state = init, action) {

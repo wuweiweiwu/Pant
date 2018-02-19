@@ -1,17 +1,20 @@
 export const tools = [
   {
     name: 'Free-Form Select',
-    description: 'Selects a free-form part of the picture to move, copy, or edit.',
+    description:
+      'Selects a free-form part of the picture to move, copy, or edit.',
     cursor: ['precise', [16, 16], 'crosshair']
   },
   {
     name: 'Select',
-    description: 'Selects a rectangular part of the picture to move, copy, or edit.',
+    description:
+      'Selects a rectangular part of the picture to move, copy, or edit.',
     cursor: ['precise', [16, 16], 'crosshair']
   },
   {
     name: 'Eraser/Color Eraser',
-    description: 'Erases a portion of the picture, using the selected eraser shape.',
+    description:
+      'Erases a portion of the picture, using the selected eraser shape.',
     cursor: ['precise', [16, 16], 'crosshair']
   },
   {

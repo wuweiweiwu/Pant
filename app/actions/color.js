@@ -1,7 +1,7 @@
-export const CHANGE_PRIMARY = "CHANGE_PRIMARY";
-export const CHANGE_SECONDARY = "CHANGE_SECONDARY";
-export const CHANGE_TERTIARY = "CHANGE_TERTIARY";
-export const SWAP_PRIMARY_SECONDARY = "SWAP_PRIMARY_SECONDARY";
+export const CHANGE_PRIMARY = 'CHANGE_PRIMARY';
+export const CHANGE_SECONDARY = 'CHANGE_SECONDARY';
+export const CHANGE_TERTIARY = 'CHANGE_TERTIARY';
+export const SWAP_PRIMARY_SECONDARY = 'SWAP_PRIMARY_SECONDARY';
 
 export function changePrimary(color) {
   return {

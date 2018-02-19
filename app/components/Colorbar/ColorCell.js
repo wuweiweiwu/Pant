@@ -1,8 +1,8 @@
 // @flow
-import React, { Component } from "react";
-import classNames from "classnames";
+import React, { Component } from 'react';
+import classNames from 'classnames';
 
-import styles from "./ColorCell.scss";
+import styles from './ColorCell.scss';
 
 type Props = {
   color: string,
@@ -20,7 +20,7 @@ class ColorCell extends Component<Props> {
     const { color } = this.props;
 
     if (this.canvas) {
-      const ctx = this.canvas.getContext("2d");
+      const ctx = this.canvas.getContext('2d');
       ctx.fillStyle = color;
       ctx.fillRect(0, 0, 13, 13);
     }
@@ -30,7 +30,7 @@ class ColorCell extends Component<Props> {
     const { color } = this.props;
 
     if (this.canvas) {
-      const ctx = this.canvas.getContext("2d");
+      const ctx = this.canvas.getContext('2d');
       ctx.fillStyle = color;
       ctx.fillRect(0, 0, 13, 13);
     }

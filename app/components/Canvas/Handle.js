@@ -15,9 +15,7 @@ type Props = {
 
 class Handle extends Component<Props> {
   render() {
-    const {
-      x, y, useless, cursor, pressed, onMouseDown
-    } = this.props;
+    const { x, y, useless, cursor, pressed, onMouseDown } = this.props;
 
     const style = {
       top: `${y}px`,
