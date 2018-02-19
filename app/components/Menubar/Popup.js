@@ -3,9 +3,9 @@ import React, { Component, Fragment } from 'react';
 import uuid from 'uuid/v1';
 import classNames from 'classnames';
 
-import { type Item } from './items';
+import { type Item } from './menus';
 import styles from './Popup.scss';
-import { DIVIDER } from './items';
+import { DIVIDER } from './menus';
 
 import { embedHotkey } from '../../utils/utils';
 
@@ -32,10 +32,20 @@ class Popup extends Component<Props> {
             {items.map(item => {
               if (typeof item !== 'string') {
                 return (
-                  <tr className={styles.menu__item} key={uuid()} disabled={item.disabled}>
-                    <td className={styles.menu__item__checkbox}>{item.checkbox && '✓'}</td>
-                    <td className={styles.menu__item__label}>{embedHotkey(item.item)}</td>
-                    <td className={styles.menu__item__shortcut}>{item.shortcut}</td>
+                  <tr
+                    className={styles.menu__item}
+                    key={uuid()}
+                    disabled={item.disabled}
+                  >
+                    <td className={styles.menu__item__checkbox}>
+                      {item.checkbox && '✓'}
+                    </td>
+                    <td className={styles.menu__item__label}>
+                      {embedHotkey(item.item)}
+                    </td>
+                    <td className={styles.menu__item__shortcut}>
+                      {item.shortcut}
+                    </td>
                     <td className={styles.menu__item__submenu}>
                       {item.submenu && (
                         <Fragment>

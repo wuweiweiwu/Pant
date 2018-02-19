@@ -7,22 +7,19 @@ import Popup from './Popup';
 
 import styles from './Menu.scss';
 import { embedHotkey } from '../../utils/utils';
-import { type Item } from './items';
+import { type MenuDef } from './menus';
 
 type Props = {
-  title: string,
-  items: Array<Item>,
+  def: MenuDef,
   pressed?: boolean,
-  isOpen: boolean,
+  isCurrent: boolean,
   openMenu: () => void,
   closeMenu: () => void
 };
 
 class Menu extends Component<Props> {
   render() {
-    const {
-      title, items, pressed, isOpen, openMenu, closeMenu
-    } = this.props;
+    const { def, pressed, isCurrent, openMenu, closeMenu } = this.props;
 
     return (
       <div className={styles.menu__container}>
@@ -31,24 +28,24 @@ class Menu extends Component<Props> {
           tabIndex={0}
           className={classNames({
             [styles.menu__button]: true,
-            [styles['menu__button--active']]: isOpen
+            [styles['menu__button--active']]: isCurrent && pressed
           })}
           onMouseOver={() => {
-            if (pressed && !isOpen) {
+            if (pressed && !isCurrent) {
               openMenu();
             }
           }}
           onClick={() => {
-            if (isOpen) {
-              closeMenu();
-            } else {
+            if (!pressed) {
               openMenu();
+            } else {
+              closeMenu();
             }
           }}
         >
-          {embedHotkey(title)}
+          {embedHotkey(Object.keys(def)[0])}
         </div>
-        <Popup items={items} isOpen={isOpen} />
+        <Popup items={def[Object.keys(def)[0]]} isOpen={isCurrent && pressed} />
       </div>
     );
   }

@@ -1,91 +1,59 @@
 // @flow
 import React, { Component } from 'react';
+import uuid from 'uuid/v1';
+
 import Menu from './Menu';
 import styles from './Menubar.scss';
+import { menus } from './menus';
 
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { openMenu, closeMenu, FILE, EDIT, VIEW, IMAGE, COLORS, HELP } from '../../actions/menu';
+type Props = {};
 
-import { fileItems, editItems, viewItems, imageItems, colorItems, helpItems } from './items';
-
-type Props = {
-  active?: string,
+type State = {
   pressed: boolean,
-  openMenu: string => void,
-  closeMenu: () => void
+  menuIndex: number
 };
 
-class MenuBar extends Component<Props> {
+class MenuBar extends Component<Props, State> {
+  constructor() {
+    super();
+    this.state = {
+      pressed: false,
+      menuIndex: 0
+    };
+    (this: any).closeMenu = this.closeMenu.bind(this);
+  }
+
+  openMenu(index: number) {
+    this.setState({
+      menuIndex: index,
+      pressed: true
+    });
+  }
+
+  closeMenu() {
+    this.setState({
+      pressed: false
+    });
+  }
+
   render() {
-    const {
-      active, pressed, openMenu, closeMenu
-    } = this.props;
+    const { menuIndex, pressed } = this.state;
 
     return (
       <div className={styles.menubar}>
-        <Menu
-          title="&File"
-          items={fileItems}
-          isOpen={active === FILE}
-          openMenu={() => openMenu(FILE)}
-          closeMenu={closeMenu}
-          pressed={pressed}
-        />
-        <Menu
-          title="&Edit"
-          items={editItems}
-          isOpen={active === EDIT}
-          openMenu={() => openMenu(EDIT)}
-          closeMenu={closeMenu}
-          pressed={pressed}
-        />
-        <Menu
-          title="&View"
-          items={viewItems}
-          isOpen={active === VIEW}
-          openMenu={() => openMenu(VIEW)}
-          closeMenu={closeMenu}
-          pressed={pressed}
-        />
-        <Menu
-          title="&Image"
-          items={imageItems}
-          isOpen={active === IMAGE}
-          openMenu={() => openMenu(IMAGE)}
-          closeMenu={closeMenu}
-          pressed={pressed}
-        />
-        <Menu
-          title="&Colors"
-          items={colorItems}
-          isOpen={active === COLORS}
-          openMenu={() => openMenu(COLORS)}
-          closeMenu={closeMenu}
-          pressed={pressed}
-        />
-        <Menu
-          title="&Help"
-          items={helpItems}
-          isOpen={active === HELP}
-          openMenu={() => openMenu(HELP)}
-          closeMenu={closeMenu}
-          pressed={pressed}
-        />
+        {menus.map((menuDef, index) => (
+          <Menu
+            key={uuid()}
+            def={menuDef}
+            pressed={pressed}
+            isCurrent={menuIndex === index}
+            closeMenu={this.closeMenu}
+            openMenu={this.openMenu.bind(this, index)}
+          />
+        ))}
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    pressed: state.menu.pressed,
-    active: state.menu.active
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ openMenu, closeMenu }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MenuBar);
+export default MenuBar;
