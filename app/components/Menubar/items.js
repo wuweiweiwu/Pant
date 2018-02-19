@@ -1,6 +1,19 @@
+// @flow
+
 export const DIVIDER: string = 'DIVIDER';
 
-export const fileItems = [
+export type Item =
+  | {
+      item: string,
+      shortcut?: string,
+      disabled?: boolean,
+      checkbox?: boolean,
+      description?: string,
+      submenu?: Array<Item>
+    }
+  | string;
+
+export const fileItems: Array<Item> = [
   {
     item: '&New',
     shortcut: 'Ctrl+N',
