@@ -21,7 +21,7 @@ import { palette } from './palette';
 type Props = {
   primary: string,
   secondary: string,
-  tertiary?: string,
+  tertiary: string,
   changePrimary: string => void,
   changeSecondary: string => void,
   changeTertiary: string => void,
