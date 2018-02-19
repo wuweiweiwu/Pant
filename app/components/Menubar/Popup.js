@@ -49,7 +49,7 @@ class Popup extends Component<Props, State> {
     };
   }
 
-  // get rid of the flashes in rendering
+  // get rid of the flashes in rendering the highlight css
   shouldComponentUpdate(nextProps, nextState) {
     if (
       _.isEqual(this.state, {
