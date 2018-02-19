@@ -3,9 +3,11 @@ import React, { Component, Fragment } from 'react';
 import uuid from 'uuid/v1';
 import classNames from 'classnames';
 
-import { embedHotkey, type Item } from './Menu';
-import styles from './Menu.scss';
+import { type Item } from './items';
+import styles from './Popup.scss';
 import { DIVIDER } from './items';
+
+import { embedHotkey } from '../../utils/utils';
 
 type Props = {
   items: Array<Item>,
