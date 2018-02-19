@@ -12,8 +12,7 @@
 
   box-shadow: 1px 1px 0 white inset, -1px -1px 0 #707070 inset;
 
-  &.menu__popup--disabled,
-  &.menu__popup--nested {
+  &.menu__popup--disabled {
     display: none;
   }
 
@@ -46,40 +45,40 @@
         text-shadow: none;
         outline: 0;
 
-        /**** reset for nested popups ****/
-        .menu__popup--nested {
-          display: block;
-          position: absolute;
-          top: 70%;
-          left: 99.9%;
-
-          .menu__item {
-            color: black;
-
-            &:hover {
-              background: #007;
-              color: #fff;
-              text-shadow: none;
-              outline: 0;
-            }
-
-            &[disabled] {
-              color: #808080;
-              text-shadow: 0.8px 0.8px 0 #fff;
-
-              &:hover {
-                text-shadow: none;
-              }
-            }
-          }
-        }
-
-        /**** super hacky lol ****/
-
         svg {
           fill: white;
         }
       }
+
+      /**** reset for nested popups ****/
+      .menu__popup--nested {
+        display: block;
+        position: absolute;
+        top: 70%;
+        left: 99.9%;
+
+        .menu__item {
+          color: black;
+
+          &:hover {
+            background: #007;
+            color: #fff;
+            text-shadow: none;
+            outline: 0;
+          }
+
+          &[disabled] {
+            color: #808080;
+            text-shadow: 0.8px 0.8px 0 #fff;
+
+            &:hover {
+              text-shadow: none;
+            }
+          }
+        }
+      }
+
+      /**** super hacky lol ****/
 
       .menu__item__checkbox,
       .menu__item__submenu {
@@ -97,6 +96,18 @@
         &:hover {
           text-shadow: none;
         }
+      }
+    }
+
+    // used for force highlights in popup
+    .menu__item--highlight {
+      background: #007;
+      color: #fff;
+      text-shadow: none;
+      outline: 0;
+
+      svg {
+        fill: white;
       }
     }
   }
