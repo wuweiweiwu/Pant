@@ -1,14 +1,14 @@
 // @flow
-import React, { Component } from 'react';
-import classNames from 'classnames';
+import React, { Component } from "react";
+import classNames from "classnames";
 
-import styles from './ColorCell.scss';
+import styles from "./ColorCell.scss";
 
 type Props = {
   color: string,
-  onContextMenu: Event => void,
-  onDoubleClick?: Event => void,
-  onClick: Event => void,
+  onContextMenu: MouseEvent => void,
+  onDoubleClick?: MouseEvent => void,
+  onClick: MouseEvent => void,
   style?: {},
   picker?: boolean
 };
@@ -20,7 +20,7 @@ class ColorCell extends Component<Props> {
     const { color } = this.props;
 
     if (this.canvas) {
-      const ctx = this.canvas.getContext('2d');
+      const ctx = this.canvas.getContext("2d");
       ctx.fillStyle = color;
       ctx.fillRect(0, 0, 13, 13);
     }
@@ -30,22 +30,23 @@ class ColorCell extends Component<Props> {
     const { color } = this.props;
 
     if (this.canvas) {
-      const ctx = this.canvas.getContext('2d');
+      const ctx = this.canvas.getContext("2d");
       ctx.fillStyle = color;
       ctx.fillRect(0, 0, 13, 13);
     }
   }
 
   render() {
-    const {
-      style, picker, onClick, onContextMenu, onDoubleClick
-    } = this.props;
+    const { style, picker, onClick, onContextMenu, onDoubleClick } = this.props;
 
     return (
       <div
         role="button"
         tabIndex={0}
-        className={classNames({ [styles.picker__cell]: picker, [styles.palette__cell]: !picker })}
+        className={classNames({
+          [styles.picker__cell]: picker,
+          [styles.palette__cell]: !picker
+        })}
         style={style}
         onClick={onClick}
         onContextMenu={onContextMenu}

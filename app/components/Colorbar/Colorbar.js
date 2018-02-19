@@ -16,23 +16,34 @@ import {
 
 import ColorCell from './ColorCell';
 import styles from './Colorbar.scss';
+import { palette } from './palette';
 
 type Props = {
   primary: string,
   secondary: string,
   tertiary?: string,
-  palette: Array<string>,
   changePrimary: string => void,
   changeSecondary: string => void,
   changeTertiary: string => void,
-  swapPrimarySecondary: () => void,
-  changePalette: string => void,
-  changePaletteIndex: number => void
+  swapPrimarySecondary: () => void
 };
 
-class Colorbar extends Component<Props> {
+type State = {
+  palette: Array<string>,
+  paletteIndex: number
+};
+
+class Colorbar extends Component<Props, State> {
   canvas: ?HTMLCanvasElement;
   input: ?HTMLInputElement;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      palette,
+      paletteIndex: 0
+    };
+  }
 
   componentDidUpdate() {
     const { tertiary } = this.props;
@@ -47,21 +58,24 @@ class Colorbar extends Component<Props> {
     const {
       primary,
       secondary,
-      palette,
       changePrimary,
       changeSecondary,
       changeTertiary,
-      swapPrimarySecondary,
-      changePalette,
-      changePaletteIndex
+      swapPrimarySecondary
     } = this.props;
+
+    const { palette } = this.state;
 
     let debounce: TimeoutID;
 
     return (
       <div className={styles.colorbar}>
         <div className={styles.colorbar__switcher}>
-          <canvas ref={canvas => (this.canvas = canvas)} height="29px" width="29px" />
+          <canvas
+            ref={canvas => (this.canvas = canvas)}
+            height="29px"
+            width="29px"
+          />
           <ColorCell
             picker
             color={secondary}
@@ -108,7 +122,7 @@ class Colorbar extends Component<Props> {
               }}
               onContextMenu={e => {
                 e.preventDefault();
-                if (window.event.ctrlKey) {
+                if (e.ctrlKey) {
                   changeTertiary(color);
                 } else {
                   changeSecondary(color);
@@ -116,11 +130,17 @@ class Colorbar extends Component<Props> {
               }}
               onDoubleClick={e => {
                 e.preventDefault();
-                changePaletteIndex(index);
-                if (this.input) {
-                  this.input.value = color;
-                  this.input.click();
-                }
+                this.setState(
+                  {
+                    paletteIndex: index
+                  },
+                  () => {
+                    if (this.input) {
+                      this.input.value = color;
+                      this.input.click();
+                    }
+                  }
+                );
               }}
             />
           ))}
@@ -132,7 +152,13 @@ class Colorbar extends Component<Props> {
             e.persist();
             clearTimeout(debounce);
             debounce = setTimeout(() => {
-              changePalette(e.target.value);
+              this.setState(prevState => ({
+                palette: prevState.palette.map((color, index) => {
+                  return index === prevState.paletteIndex
+                    ? e.target.value
+                    : color;
+                })
+              }));
               changePrimary(e.target.value);
             }, 200);
           }}
@@ -146,8 +172,7 @@ function mapStateToProps(state) {
   return {
     primary: state.color.primary,
     secondary: state.color.secondary,
-    tertiary: state.color.tertiary,
-    palette: state.color.palette
+    tertiary: state.color.tertiary
   };
 }
 
@@ -157,8 +182,6 @@ function mapDispatchToProps(dispatch) {
       changePrimary,
       changeSecondary,
       changeTertiary,
-      changePalette,
-      changePaletteIndex,
       swapPrimarySecondary
     },
     dispatch
