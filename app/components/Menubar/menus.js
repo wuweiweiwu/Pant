@@ -6,7 +6,7 @@ export type Item =
       item: string,
       shortcut?: string,
       disabled?: boolean,
-      checkbox?: boolean,
+      checkbox?: string, // key for the checkbox in redux store
       description?: string,
       submenu?: Array<Item>
     }
@@ -149,30 +149,30 @@ export const viewMenu: MenuDef = {
     {
       item: '&Tool Box',
       shortcut: 'Ctrl+T',
-      checkbox: true,
+      checkbox: 'tool',
       description: 'Shows or hides the tool box.'
     },
     {
       item: '&Color Box',
       shortcut: 'Ctrl+L',
-      checkbox: true,
+      checkbox: 'color',
       description: 'Shows or hides the color box.'
     },
     {
       item: '&Status Bar',
-      checkbox: true,
+      checkbox: 'status',
       description: 'Shows or hides the status bar.'
     },
     {
       item: 'T&ext Toolbar',
       disabled: true,
-      checkbox: true,
+      checkbox: 'text',
       description: 'Shows or hides the text toolbar.'
     },
     DIVIDER,
     {
       item: 'E&xtras Menu',
-      checkbox: true,
+      checkbox: 'extras',
       description: 'Shows or hides the Extras menu.'
     },
     DIVIDER,
@@ -199,13 +199,13 @@ export const viewMenu: MenuDef = {
           item: 'Show &Grid',
           shorcut: 'Ctrl+G',
           disabled: true,
-          checkbox: true,
+          checkbox: 'grid',
           description: 'Shows or hides the grid.'
         },
         {
           item: 'Show T&humbnail',
           disabled: true,
-          checkbox: true,
+          checkbox: 'thumbnail',
           description: 'Shows or hides the thumbnail view of the picture.'
         }
       ]
@@ -247,7 +247,7 @@ export const imageMenu: MenuDef = {
     },
     {
       item: '&Draw Opaque',
-      checkbox: true,
+      checkbox: 'opaque',
       description: 'Makes the current selection either opaque or transparent.'
     }
   ]

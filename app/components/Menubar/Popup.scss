@@ -7,7 +7,9 @@
   display: block;
   padding: 2px;
   background: #c0c0c0;
+
   @include border(#c0c0c0, #c0c0c0, #000, #000);
+
   box-shadow: 1px 1px 0 white inset, -1px -1px 0 #707070 inset;
 
   &.menu__popup--disabled,
@@ -20,10 +22,10 @@
 
     .menu__divider {
       border: 0;
-      border-top: 1px solid #808080;
-      border-bottom: 1px solid #ffffff;
+
       @include border(#808080, '', '', #ffffff);
-      margin: 0px 2px;
+
+      margin: 0 2px;
       display: block !important;
       height: 0;
       width: auto;
@@ -63,7 +65,7 @@
 
             &[disabled] {
               color: #808080;
-              text-shadow: 0.8px 0.8px 0px #fff;
+              text-shadow: 0.8px 0.8px 0 #fff;
 
               &:hover {
                 text-shadow: none;
@@ -71,6 +73,7 @@
             }
           }
         }
+
         /**** super hacky lol ****/
 
         svg {
@@ -81,7 +84,6 @@
       .menu__item__checkbox,
       .menu__item__submenu {
         min-width: 16px;
-        text-align: center;
       }
 
       .menu__item__label,
@@ -90,7 +92,7 @@
 
       &[disabled] {
         color: #808080;
-        text-shadow: 0.8px 0.8px 0px #fff;
+        text-shadow: 0.8px 0.8px 0 #fff;
 
         &:hover {
           text-shadow: none;
