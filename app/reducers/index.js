@@ -1,13 +1,15 @@
 // @flow
 import { combineReducers } from 'redux';
-import menu from './menu';
-import color from './color';
-import canvas from './canvas';
+import menuReducer from './menu';
+import colorReducer from './color';
+import canvasReducer from './canvas';
+import windowReducer from './window';
 
 const rootReducer = combineReducers({
-  menu,
-  color,
-  canvas
+  menu: menuReducer,
+  color: colorReducer,
+  canvas: canvasReducer,
+  window: windowReducer
 });
 
 export default rootReducer;
