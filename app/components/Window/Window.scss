@@ -1,0 +1,92 @@
+.window {
+  @include border(#dfdfdf, #dfdfdf, #000, #000);
+  position: absolute;
+  background: #c0c0c0;
+  padding: 2px;
+  display: block !important;
+  z-index: 10;
+  cursor: default;
+
+  & > * {
+    margin: 1px;
+  }
+
+  &:after {
+    @include border(#fff, #fff, #7b7b7b, #7b7b7b);
+    @include position(0px, 0px, 0px, 0px);
+    content: '';
+    pointer-events: none;
+  }
+
+  .window__titlebar {
+    background: linear-gradient(to right, #000080 0%, #1084d0 100%);
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 12px;
+    height: 15px;
+    align-items: center;
+    justify-content: space-between;
+
+    .window__titlebar__title {
+      padding: 0;
+      padding-left: 2px;
+      margin: 0;
+      display: inline-block !important;
+    }
+
+    button.window__titlebar__close {
+      @include border(#fff, #fff, #000, #000);
+      margin: 2px;
+      width: 13px;
+      height: 11px;
+      display: inline-block !important;
+      float: right;
+      padding: 0;
+      vertical-align: middle;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      background: #c0c0c0;
+      position: relative;
+
+      &:before {
+        content: '×';
+        right: 0px;
+        top: -3px;
+        position: relative;
+      }
+
+      &:after {
+        content: '';
+        pointer-events: none;
+        @include position(0px, 0px, 0px, 0px);
+        @include border(#dfdfdf, #dfdfdf, #808080, #808080);
+      }
+
+      &.window__titlebar__close--pressed {
+        @include border(#000,#000, #fff, #fff);
+        &:after {
+          @include border(#808080, #808080, #dfdfdf, #dfdfdf);
+        }
+      }
+    }
+  }
+
+  .window__content {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    overflow-wrap: break-word;
+  }
+
+  &.window--hidden {
+    display: none;
+  }
+
+  .move {
+    z-index: 20;
+    outline: 1px dotted black;
+    pointer-events: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+}
