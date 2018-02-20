@@ -22,7 +22,6 @@ class Window extends Component {
     this.unpressClose = this.unpressClose.bind(this);
     this.pressTitle = this.pressTitle.bind(this);
     this.unpressTitle = this.unpressTitle.bind(this);
-    this.documentMouseUp = this.documentMouseUp.bind(this);
   }
 
   documentMouseMove(e) {
@@ -34,7 +33,7 @@ class Window extends Component {
 
   documentMouseUp(e) {
     const { window: state } = window.store.getState();
-    if (state.moving) {
+    if (state.moving && this.props.open) {
       window.store.dispatch(stopMoving());
       // set updated location of the current window
       this.setState((undefined, props) => {
@@ -49,12 +48,11 @@ class Window extends Component {
 
   componentDidMount() {
     document.addEventListener('mousemove', this.documentMouseMove);
-    document.addEventListener('mouseup', this.documentMouseUp);
+    document.addEventListener('mouseup', this.documentMouseUp.bind(this));
   }
 
   componentWillUnmount() {
     document.removeEventListener('mousemove', this.documentMouseMove);
-    document.removeEventListener('mouseup', this.documentMouseUp);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -93,12 +91,12 @@ class Window extends Component {
     const {
       // user props
       title,
-      hidden,
       content,
       top,
       left,
       height,
       width,
+      open,
 
       // redux props
       moving,
@@ -126,7 +124,7 @@ class Window extends Component {
       <div
         className={classNames({
           [styles.window]: true,
-          [styles['window--hidden']]: hidden
+          [styles['window--hidden']]: !open
         })}
         style={{
           height: `${height}px`,
@@ -137,13 +135,21 @@ class Window extends Component {
       >
         <div
           className={styles.window__titlebar}
-          onMouseDown={this.pressTitle}
+          onMouseDown={() => {
+            if (open && !titlePressed) {
+              this.pressTitle();
+            }
+          }}
           onMouseUp={() => {
-            this.unpressTitle();
-            stopMoving();
+            if (open && titlePressed) {
+              this.unpressTitle();
+              if (moving) {
+                stopMoving();
+              }
+            }
           }}
           onMouseMove={e => {
-            if (titlePressed && !moving) {
+            if (titlePressed && !moving && open) {
               startMoving(e.clientX - actualLeft, e.clientY - actualTop);
             }
           }}
@@ -160,17 +166,18 @@ class Window extends Component {
           />
         </div>
         <div className={styles.window__content}>{content}</div>
-        {moving && (
-          <div
-            className={styles.move}
-            style={{
-              height: `${height}px`,
-              width: `${width}px`,
-              top: `${currentY - actualTop - offsetY}px`,
-              left: `${currentX - actualLeft - offsetX}px`
-            }}
-          />
-        )}
+        {moving &&
+          open && (
+            <div
+              className={styles.move}
+              style={{
+                height: `${height}px`,
+                width: `${width}px`,
+                top: `${currentY - actualTop - offsetY}px`,
+                left: `${currentX - actualLeft - offsetX}px`
+              }}
+            />
+          )}
       </div>
     );
   }
