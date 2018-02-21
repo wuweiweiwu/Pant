@@ -16,7 +16,6 @@ import {
 
 import ColorCell from './ColorCell';
 import styles from './Colorbar.scss';
-import { palette } from './palette';
 
 type Props = {
   primary: string,
@@ -25,25 +24,15 @@ type Props = {
   changePrimary: string => void,
   changeSecondary: string => void,
   changeTertiary: string => void,
-  swapPrimarySecondary: () => void
+  swapPrimarySecondary: () => void,
+  changePalette: string => void,
+  changePaletteIndex: number => void,
+  palette: Array<string>
 };
 
-type State = {
-  palette: Array<string>,
-  paletteIndex: number
-};
-
-class Colorbar extends Component<Props, State> {
+class Colorbar extends Component<Props> {
   canvas: ?HTMLCanvasElement;
   input: ?HTMLInputElement;
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      palette,
-      paletteIndex: 0
-    };
-  }
 
   componentDidUpdate() {
     const { tertiary } = this.props;
@@ -61,10 +50,11 @@ class Colorbar extends Component<Props, State> {
       changePrimary,
       changeSecondary,
       changeTertiary,
-      swapPrimarySecondary
+      swapPrimarySecondary,
+      changePalette,
+      changePaletteIndex,
+      palette
     } = this.props;
-
-    const { palette } = this.state;
 
     let debounce: TimeoutID;
 
@@ -130,17 +120,11 @@ class Colorbar extends Component<Props, State> {
               }}
               onDoubleClick={e => {
                 e.preventDefault();
-                this.setState(
-                  {
-                    paletteIndex: index
-                  },
-                  () => {
-                    if (this.input) {
-                      this.input.value = color;
-                      this.input.click();
-                    }
-                  }
-                );
+                changePaletteIndex(index);
+                if (this.input) {
+                  this.input.value = color;
+                  this.input.click();
+                }
               }}
             />
           ))}
@@ -152,13 +136,7 @@ class Colorbar extends Component<Props, State> {
             e.persist();
             clearTimeout(debounce);
             debounce = setTimeout(() => {
-              this.setState(prevState => ({
-                palette: prevState.palette.map((color, index) => {
-                  return index === prevState.paletteIndex
-                    ? e.target.value
-                    : color;
-                })
-              }));
+              changePalette(e.target.value);
               changePrimary(e.target.value);
             }, 200);
           }}
@@ -172,7 +150,8 @@ function mapStateToProps(state) {
   return {
     primary: state.color.primary,
     secondary: state.color.secondary,
-    tertiary: state.color.tertiary
+    tertiary: state.color.tertiary,
+    palette: state.color.palette
   };
 }
 
@@ -182,7 +161,9 @@ function mapDispatchToProps(dispatch) {
       changePrimary,
       changeSecondary,
       changeTertiary,
-      swapPrimarySecondary
+      swapPrimarySecondary,
+      changePalette,
+      changePaletteIndex
     },
     dispatch
   );
