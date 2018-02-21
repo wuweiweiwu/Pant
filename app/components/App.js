@@ -7,6 +7,8 @@ import Canvas from './Canvas';
 import Colorbar from './Colorbar';
 import Statusbar from './Statusbar';
 
+import Window from './Window';
+
 import styles from './App.scss';
 
 type Props = {
@@ -25,8 +27,29 @@ export default class App extends React.Component<Props> {
             <Toolbar />
             <Canvas />
           </div>
-          <Colorbar />
+          <Colorbar style={{ marginLeft: '2px' }} />
           <Statusbar />
+
+          <Window
+            show
+            title="Colors"
+            content={<Colorbar />}
+            top={100}
+            left={100}
+            height={65}
+            width={245}
+          />
+
+          <Window
+            show
+            active
+            title="Tools"
+            content={<Toolbar />}
+            top={200}
+            left={200}
+            height={290}
+            width={60}
+          />
         </div>
       </div>
     );

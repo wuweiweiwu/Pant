@@ -27,7 +27,8 @@ type Props = {
   swapPrimarySecondary: () => void,
   changePalette: string => void,
   changePaletteIndex: number => void,
-  palette: Array<string>
+  palette: Array<string>,
+  style?: { [string]: string }
 };
 
 class Colorbar extends Component<Props> {
@@ -53,13 +54,14 @@ class Colorbar extends Component<Props> {
       swapPrimarySecondary,
       changePalette,
       changePaletteIndex,
-      palette
+      palette,
+      style
     } = this.props;
 
     let debounce: TimeoutID;
 
     return (
-      <div className={styles.colorbar}>
+      <div className={styles.colorbar} style={style}>
         <div className={styles.colorbar__switcher}>
           <canvas
             ref={canvas => (this.canvas = canvas)}
