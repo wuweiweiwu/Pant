@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+// @flow
+import React, { Component, type Node } from 'react';
 import classNames from 'classnames';
 
 import { bindActionCreators } from 'redux';
@@ -7,7 +8,35 @@ import { startMoving, stopMoving, moveWindow } from '../../actions/window';
 
 import styles from './Window.scss';
 
-class Window extends Component {
+type Props = {
+  // user props
+  title: string,
+  content: Node,
+  top: number,
+  left: number,
+  height: number,
+  width: number,
+  active?: boolean, // is this window active? Can we click and drag
+  show?: boolean, // are we showing this window
+
+  // redux props
+  moving: boolean,
+  startMoving: (number, number) => void,
+  stopMoving: () => void,
+  currentX: number,
+  currentY: number,
+  offsetX: number,
+  offsetY: number
+};
+
+type State = {
+  titlePressed: boolean,
+  closePressed: boolean,
+  updatedTop: number,
+  updatedLeft: number
+};
+
+class Window extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,22 +47,22 @@ class Window extends Component {
       updatedTop: Number.NEGATIVE_INFINITY,
       updatedLeft: Number.NEGATIVE_INFINITY
     };
-    this.pressClose = this.pressClose.bind(this);
-    this.unpressClose = this.unpressClose.bind(this);
-    this.pressTitle = this.pressTitle.bind(this);
-    this.unpressTitle = this.unpressTitle.bind(this);
+    (this: any).pressClose = this.pressClose.bind(this);
+    (this: any).unpressClose = this.unpressClose.bind(this);
+    (this: any).pressTitle = this.pressTitle.bind(this);
+    (this: any).unpressTitle = this.unpressTitle.bind(this);
   }
 
-  documentMouseMove(e) {
+  documentMouseMove(e: MouseEvent) {
     const { window: state } = window.store.getState();
     if (state.moving) {
       window.store.dispatch(moveWindow(e.clientX, e.clientY));
     }
   }
 
-  documentMouseUp(e) {
+  documentMouseUp(e: MouseEvent) {
     const { window: state } = window.store.getState();
-    if (state.moving && this.props.open) {
+    if (state.moving && this.props.active) {
       window.store.dispatch(stopMoving());
       // set updated location of the current window
       this.setState((undefined, props) => {
@@ -89,16 +118,14 @@ class Window extends Component {
 
   render() {
     const {
-      // user props
       title,
       content,
       top,
       left,
       height,
       width,
-      open,
-
-      // redux props
+      active,
+      show,
       moving,
       startMoving,
       stopMoving,
@@ -124,7 +151,7 @@ class Window extends Component {
       <div
         className={classNames({
           [styles.window]: true,
-          [styles['window--hidden']]: !open
+          [styles['window--hidden']]: !show
         })}
         style={{
           height: `${height}px`,
@@ -136,12 +163,12 @@ class Window extends Component {
         <div
           className={styles.window__titlebar}
           onMouseDown={() => {
-            if (open && !titlePressed) {
+            if (active && !titlePressed) {
               this.pressTitle();
             }
           }}
           onMouseUp={() => {
-            if (open && titlePressed) {
+            if (active && titlePressed) {
               this.unpressTitle();
               if (moving) {
                 stopMoving();
@@ -149,7 +176,7 @@ class Window extends Component {
             }
           }}
           onMouseMove={e => {
-            if (titlePressed && !moving && open) {
+            if (titlePressed && !moving && active) {
               startMoving(e.clientX - actualLeft, e.clientY - actualTop);
             }
           }}
@@ -167,7 +194,8 @@ class Window extends Component {
         </div>
         <div className={styles.window__content}>{content}</div>
         {moving &&
-          open && (
+          show &&
+          active && (
             <div
               className={styles.move}
               style={{
