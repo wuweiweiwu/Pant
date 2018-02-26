@@ -32,6 +32,8 @@ yarn dev
 * [ ] Polygon
 * [ ] Ellipse
 * [ ] Rounded Rectangle
+* [ ] draggable
+* [ ] dockable
 
 ### Canvas
 
@@ -47,6 +49,8 @@ yarn dev
 * [x] `right click` to change secondary
 * [x] <kbd>Ctrl</kbd> `left click` to change tertiary
 * [x] `double click` to pull up `<input type="color"/>` (debounced for `change`)
+* [ ] draggable
+* [ ] dockable
 
 ### Menu
 
