@@ -4,7 +4,8 @@ import {
   CHANGE_TERTIARY,
   SWAP_PRIMARY_SECONDARY,
   CHANGE_PALETTE_INDEX,
-  CHANGE_PALETTE
+  CHANGE_PALETTE,
+  SET_MARGIN_LEFT
 } from '../actions/color';
 
 const palette: Array<string> = [
@@ -43,6 +44,7 @@ const init = {
   secondary: 'white',
   tertiary: 'rgba(0, 0, 0, 0)',
   index: Number.NEGATIVE_INFINITY,
+  marginLeft: 0,
   palette
 };
 
@@ -80,6 +82,11 @@ export default function reducer(state = init, action) {
       return {
         ...state,
         index: action.index
+      };
+    case SET_MARGIN_LEFT:
+      return {
+        ...state,
+        marginLeft: action.marginLeft
       };
     default:
       return state;
