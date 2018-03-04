@@ -4,7 +4,13 @@ import classNames from 'classnames';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { startMoving, stopMoving, moveWindow } from '../../actions/window';
+import {
+  startMoving,
+  stopMoving,
+  moveWindow,
+  hideWindow,
+  dockColorWindow
+} from '../../actions/window';
 import { setMarginLeft } from '../../actions/color';
 
 import styles from './Window.scss';
@@ -19,7 +25,7 @@ type Props = {
   width: number,
   active?: boolean, // is this window active? Can we click and drag
   // show?: boolean, // are we showing this window
-  docked?: (number, number) => boolean, // passed to evaluate if this window is docked
+  docked?: (number, number, number) => boolean, // passed to evaluate if this window is docked
 
   // redux props
   moving: boolean,
@@ -31,7 +37,9 @@ type Props = {
   offsetY: number,
 
   isColor?: boolean,
-  colorWindow: boolean
+  colorWindow: boolean,
+  colorDock: number,
+  hideWindow?: string => void
 };
 
 type State = {
@@ -70,9 +78,32 @@ class Window extends Component<Props, State> {
     if (state.moving && this.props.active) {
       window.store.dispatch(stopMoving());
       // set the margins
-      const { currentX, offsetX, currentY, offsetY, docked } = this.props;
-      if (docked && docked(currentX - offsetX, currentY - offsetY)) {
-        window.store.dispatch(setMarginLeft(currentX - offsetX));
+      const {
+        currentX,
+        offsetX,
+        currentY,
+        offsetY,
+        docked,
+        isColor,
+        colorDock
+      } = this.props;
+
+      if (docked) {
+        const dockPos = docked(
+          currentX - offsetX,
+          currentY - offsetY,
+          colorDock
+        );
+
+        // if dockPos > 0 or < 0 then hide window
+        if (isColor && dockPos) {
+          window.store.dispatch(setMarginLeft(currentX - offsetX));
+          window.store.dispatch(hideWindow('color'));
+        }
+        // always update where dock is
+        if (isColor) {
+          window.store.dispatch(dockColorWindow(dockPos));
+        }
       }
       // set updated location of the current window
       this.setState((undefined, props) => {
@@ -103,6 +134,12 @@ class Window extends Component<Props, State> {
   }
 
   pressClose() {
+    const { isColor, hideWindow } = this.props;
+
+    if (isColor && hideWindow) {
+      hideWindow('color');
+    }
+
     this.setState({
       closePressed: true
     });
@@ -146,7 +183,9 @@ class Window extends Component<Props, State> {
       docked,
 
       isColor,
-      colorWindow
+      colorWindow,
+      colorDock,
+      hideWindow
     } = this.props;
 
     const { titlePressed, closePressed, updatedTop, updatedLeft } = this.state;
@@ -162,10 +201,7 @@ class Window extends Component<Props, State> {
     }
 
     // actualTop = show ? actualTop : -500;
-    const isDocked = docked
-      ? docked(currentX - offsetX, currentY - offsetY)
-      : false;
-    actualTop = isColor && colorWindow && !isDocked ? actualTop : -1000;
+    actualTop = isColor && colorWindow ? actualTop : -1000;
 
     return (
       <div
@@ -189,8 +225,14 @@ class Window extends Component<Props, State> {
           }}
           onMouseUp={() => {
             if (active && titlePressed) {
-              if (docked && docked(currentX - offsetX, currentY - offsetY)) {
+              if (
+                docked &&
+                docked(currentX - offsetX, currentY - offsetY, colorDock)
+              ) {
                 setMarginLeft(currentX - offsetX);
+                if (isColor && hideWindow) {
+                  hideWindow('color');
+                }
               }
               this.unpressTitle();
               if (moving) {
@@ -221,7 +263,7 @@ class Window extends Component<Props, State> {
             <div
               className={classNames(styles.move, {
                 [styles.docked]: docked
-                  ? docked(currentX - offsetX, currentY - offsetY)
+                  ? docked(currentX - offsetX, currentY - offsetY, colorDock)
                   : false
               })}
               style={{
@@ -249,7 +291,9 @@ function mapStateToProps(state) {
     offsetX: state.window.offsetX,
     offsetY: state.window.offsetY,
 
-    colorWindow: state.window.colorWindow
+    // if color window is active
+    colorWindow: state.window.colorWindow,
+    colorDock: state.window.colorDock
   };
 }
 
@@ -258,7 +302,8 @@ function mapDispatchToProps(dispatch) {
     {
       startMoving,
       stopMoving,
-      setMarginLeft
+      setMarginLeft,
+      hideWindow
     },
     dispatch
   );

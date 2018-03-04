@@ -23,11 +23,13 @@ export default class App extends React.Component<Props> {
       <div className={styles.reactpaint}>
         <div className={styles.vertical}>
           <Menubar />
+          <Colorbar top style={{ marginLeft: '2px' }} />
+
           <div className={styles.horizontal}>
             <Toolbar />
             <Canvas />
           </div>
-          <Colorbar style={{ marginLeft: '2px' }} />
+          <Colorbar bottom style={{ marginLeft: '2px' }} />
           <Statusbar />
 
           <Window
@@ -40,15 +42,27 @@ export default class App extends React.Component<Props> {
             left={100}
             height={65}
             width={245}
-            docked={(x, y) => {
-              if (y < 15 || y + 65 + 50 + 30 > window.innerHeight) {
-                return true;
+            docked={(x, y, colorPos) => {
+              console.log(colorPos);
+              let lowerBound = 20;
+              let upperBound = window.innerHeight - 95;
+
+              if (colorPos > 0) {
+                upperBound -= 40;
+              } else if (colorPos < 0) {
+                lowerBound += 40;
               }
-              return false;
+
+              if (y < lowerBound) {
+                return -1;
+              } else if (y > upperBound) {
+                return 1;
+              }
+              return 0;
             }}
           />
 
-          <Window
+          {/* <Window
             show
             title="Tools"
             content={<Toolbar />}
@@ -62,7 +76,7 @@ export default class App extends React.Component<Props> {
               }
               return false;
             }}
-          />
+          /> */}
         </div>
       </div>
     );

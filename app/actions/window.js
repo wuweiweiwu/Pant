@@ -5,6 +5,8 @@ export const MOVE_WINDOW = 'MOVE_WINDOW';
 export const SHOW_WINDOW = 'SHOW_WINDOW';
 export const HIDE_WINDOW = 'HIDE_WINDOW';
 
+export const DOCK_COLOR_WINDOW = 'DOCK_COLOR_WINDOW';
+
 export function startMoving(x, y) {
   return {
     type: START_MOVING_WINDOW,
@@ -38,5 +40,12 @@ export function hideWindow(win) {
   return {
     type: HIDE_WINDOW,
     window: win
+  };
+}
+
+export function dockColorWindow(dock) {
+  return {
+    type: DOCK_COLOR_WINDOW,
+    dock
   };
 }
