@@ -32,8 +32,9 @@ export default class App extends React.Component<Props> {
 
           <Window
             active
-            show
+            // show
             title="Colors"
+            isColor
             content={<Colorbar inWindow />}
             top={100}
             left={100}

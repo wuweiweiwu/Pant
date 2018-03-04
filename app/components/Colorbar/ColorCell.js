@@ -41,16 +41,21 @@ class ColorCell extends Component<Props> {
 
     return (
       <div
-        role="button"
-        tabIndex={0}
         className={classNames({
           [styles.picker__cell]: picker,
           [styles.palette__cell]: !picker
         })}
         style={style}
-        onClick={onClick}
+        // onClick={onClick}
         onContextMenu={onContextMenu}
         onDoubleClick={onDoubleClick}
+        // onMouseDown={e => e.stopPropagation()}
+        onMouseDown={e => {
+          e.stopPropagation();
+          onClick(e);
+        }}
+        onMouseUp={e => e.stopPropagation()}
+        onMouseMove={e => e.stopPropagation()}
       >
         <canvas
           ref={cv => {
