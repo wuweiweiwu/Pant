@@ -43,7 +43,6 @@ export default class App extends React.Component<Props> {
             height={65}
             width={245}
             docked={(x, y, colorPos) => {
-              console.log(colorPos);
               let lowerBound = 20;
               let upperBound = window.innerHeight - 95;
 
