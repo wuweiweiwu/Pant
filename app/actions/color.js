@@ -6,8 +6,6 @@ export const SWAP_PRIMARY_SECONDARY = 'SWAP_PRIMARY_SECONDARY';
 export const CHANGE_PALETTE_INDEX = 'CHANGE_PALETTE_INDEX';
 export const CHANGE_PALETTE = 'CHANGE_PALETTE';
 
-export const SET_MARGIN_LEFT = 'SET_MARGIN_LEFT';
-
 export function changePrimary(color) {
   return {
     type: CHANGE_PRIMARY,
@@ -45,12 +43,5 @@ export function changePalette(color) {
   return {
     type: CHANGE_PALETTE,
     color
-  };
-}
-
-export function setMarginLeft(marginLeft) {
-  return {
-    type: SET_MARGIN_LEFT,
-    marginLeft
   };
 }

@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { startMoving, stopMoving, moveWindow } from '../../actions/window';
-import { setMarginLeft } from '../../actions/color';
 
 import styles from './Window.scss';
 
@@ -19,7 +18,6 @@ type Props = {
   width: number,
   active?: boolean, // is this window active? Can we click and drag
   show?: boolean, // are we showing this window
-  docked?: (number, number) => boolean, // passed to evaluate if this window is docked
 
   // redux props
   moving: boolean,
@@ -66,11 +64,6 @@ class Window extends Component<Props, State> {
     const { window: state } = window.store.getState();
     if (state.moving && this.props.active) {
       window.store.dispatch(stopMoving());
-      // set the margins
-      const { currentX, offsetX, currentY, offsetY, docked } = this.props;
-      if (docked && docked(currentX - offsetX, currentY - offsetY)) {
-        window.store.dispatch(setMarginLeft(currentX - offsetX));
-      }
       // set updated location of the current window
       this.setState((undefined, props) => {
         const { offsetX, offsetY, currentX, currentY } = props;
@@ -139,8 +132,7 @@ class Window extends Component<Props, State> {
       currentX,
       currentY,
       offsetX,
-      offsetY,
-      docked
+      offsetY
     } = this.props;
 
     const { titlePressed, closePressed, updatedTop, updatedLeft } = this.state;
@@ -177,14 +169,6 @@ class Window extends Component<Props, State> {
           }}
           onMouseUp={() => {
             if (active && titlePressed) {
-              if (docked && docked(currentX - offsetX, currentY - offsetY)) {
-                console.log(
-                  'title docked at',
-                  currentX - offsetX,
-                  currentY - offsetY
-                );
-                setMarginLeft(currentX - offsetX);
-              }
               this.unpressTitle();
               if (moving) {
                 stopMoving();
@@ -199,7 +183,8 @@ class Window extends Component<Props, State> {
         >
           <span className={styles.window__titlebar__title}>{title}</span>
           <button
-            className={classNames(styles.window__titlebar__close, {
+            className={classNames({
+              [styles.window__titlebar__close]: true,
               [styles['window__titlebar__close--pressed']]: closePressed
             })}
             onMouseDown={this.pressClose}
@@ -212,11 +197,7 @@ class Window extends Component<Props, State> {
           show &&
           active && (
             <div
-              className={classNames(styles.move, {
-                [styles.docked]: docked
-                  ? docked(currentX - offsetX, currentY - offsetY)
-                  : false
-              })}
+              className={styles.move}
               style={{
                 height: `${height}px`,
                 width: `${width}px`,
@@ -248,8 +229,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       startMoving,
-      stopMoving,
-      setMarginLeft
+      stopMoving
     },
     dispatch
   );

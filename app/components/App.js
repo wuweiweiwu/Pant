@@ -31,36 +31,24 @@ export default class App extends React.Component<Props> {
           <Statusbar />
 
           <Window
-            active
             show
             title="Colors"
-            content={<Colorbar inWindow />}
+            content={<Colorbar />}
             top={100}
             left={100}
             height={65}
             width={245}
-            docked={(x, y) => {
-              if (y < 15 || y + 65 + 50 + 30 > window.innerHeight) {
-                return true;
-              }
-              return false;
-            }}
           />
 
           <Window
             show
+            active
             title="Tools"
             content={<Toolbar />}
             top={200}
             left={200}
             height={290}
             width={60}
-            docked={(x, y) => {
-              if (x < 58 || x + 65 > window.innerWidth) {
-                return true;
-              }
-              return false;
-            }}
           />
         </div>
       </div>

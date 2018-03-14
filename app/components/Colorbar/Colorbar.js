@@ -28,9 +28,7 @@ type Props = {
   changePalette: string => void,
   changePaletteIndex: number => void,
   palette: Array<string>,
-  style?: { [string]: string },
-  inWindow?: boolean,
-  marginLeft: number
+  style?: { [string]: string }
 };
 
 class Colorbar extends Component<Props> {
@@ -57,18 +55,13 @@ class Colorbar extends Component<Props> {
       changePalette,
       changePaletteIndex,
       palette,
-      style,
-      marginLeft,
-      inWindow
+      style
     } = this.props;
 
     let debounce: TimeoutID;
 
     return (
-      <div
-        className={styles.colorbar}
-        style={inWindow ? style : { marginLeft: `${marginLeft + 2}px` }}
-      >
+      <div className={styles.colorbar} style={style}>
         <div className={styles.colorbar__switcher}>
           <canvas
             ref={canvas => (this.canvas = canvas)}
@@ -160,8 +153,7 @@ function mapStateToProps(state) {
     primary: state.color.primary,
     secondary: state.color.secondary,
     tertiary: state.color.tertiary,
-    palette: state.color.palette,
-    marginLeft: state.color.marginLeft
+    palette: state.color.palette
   };
 }
 

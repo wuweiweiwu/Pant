@@ -88,25 +88,5 @@
     position: absolute;
     top: 0px;
     left: 0px;
-
-    &.docked {
-      outline: 1px solid black;
-    }
-
-    &:not(.docked):after,
-    &:not(.docked):before {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      outline: 1px dotted black;
-      outline-offset: 1px;
-    }
-
-    &:not(.docked):before {
-      outline-offset: 2px;
-    }
   }
 }
