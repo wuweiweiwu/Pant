@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react';
 import uuid from 'uuid/v1';
-import classNames from 'classnames';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -42,11 +41,7 @@ type Props = {
 
   moving: boolean,
   startMoving: (number, number) => void,
-  stopMoving: () => void,
-
-  top?: boolean,
-  bottom?: boolean,
-  colorDock: number
+  stopMoving: () => void
 };
 
 type State = {
@@ -110,11 +105,7 @@ class Colorbar extends Component<Props, State> {
 
       moving,
       startMoving,
-      stopMoving,
-
-      top,
-      bottom,
-      colorDock
+      stopMoving
     } = this.props;
 
     const { clicked } = this.state;
@@ -123,13 +114,7 @@ class Colorbar extends Component<Props, State> {
 
     return (
       <div
-        className={classNames(styles.colorbar, {
-          [styles['colorbar--hidden']]:
-            !inWindow &&
-            ((top && colorDock > 0) ||
-              (bottom && colorDock < 0) ||
-              colorDock === 0)
-        })}
+        className={styles.colorbar}
         style={inWindow ? style : { marginLeft: `${marginLeft + 2}px` }}
         onMouseDown={() => {
           if (!clicked && !inWindow) {
@@ -257,9 +242,7 @@ function mapStateToProps(state) {
     palette: state.color.palette,
     marginLeft: state.color.marginLeft,
 
-    moving: state.window.moving,
-
-    colorDock: state.window.colorDock
+    moving: state.window.moving
   };
 }
 

@@ -3,8 +3,7 @@ import {
   STOP_MOVING_WINDOW,
   MOVE_WINDOW,
   SHOW_WINDOW,
-  HIDE_WINDOW,
-  DOCK_COLOR_WINDOW
+  HIDE_WINDOW
 } from '../actions/window';
 
 const init = {
@@ -14,8 +13,7 @@ const init = {
   currentX: 0,
   currentY: 0,
 
-  colorWindow: false,
-  colorDock: 1 // -1 for top, 1 for bottom
+  colorWindow: false
 };
 
 export default function reducer(state = init, action) {
@@ -50,11 +48,6 @@ export default function reducer(state = init, action) {
           ...state,
           colorWindow: false
         };
-    case DOCK_COLOR_WINDOW:
-      return {
-        ...state,
-        colorDock: action.dock
-      };
     default:
       return state;
   }
