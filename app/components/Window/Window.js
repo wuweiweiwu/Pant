@@ -18,7 +18,7 @@ type Props = {
   height: number,
   width: number,
   active?: boolean, // is this window active? Can we click and drag
-  // show?: boolean, // are we showing this window
+  show?: boolean, // are we showing this window
   docked?: (number, number) => boolean, // passed to evaluate if this window is docked
 
   // redux props
@@ -28,10 +28,7 @@ type Props = {
   currentX: number,
   currentY: number,
   offsetX: number,
-  offsetY: number,
-
-  isColor?: boolean,
-  colorWindow: boolean
+  offsetY: number
 };
 
 type State = {
@@ -60,7 +57,7 @@ class Window extends Component<Props, State> {
 
   documentMouseMove(e: MouseEvent) {
     const { window: state } = window.store.getState();
-    if (state.moving && this.state.titlePressed) {
+    if (state.moving) {
       window.store.dispatch(moveWindow(e.clientX, e.clientY));
     }
   }
@@ -86,7 +83,7 @@ class Window extends Component<Props, State> {
   }
 
   componentDidMount() {
-    document.addEventListener('mousemove', this.documentMouseMove.bind(this));
+    document.addEventListener('mousemove', this.documentMouseMove);
     document.addEventListener('mouseup', this.documentMouseUp.bind(this));
   }
 
@@ -135,7 +132,7 @@ class Window extends Component<Props, State> {
       height,
       width,
       active,
-      // show,
+      show,
       moving,
       startMoving,
       stopMoving,
@@ -143,10 +140,7 @@ class Window extends Component<Props, State> {
       currentY,
       offsetX,
       offsetY,
-      docked,
-
-      isColor,
-      colorWindow
+      docked
     } = this.props;
 
     const { titlePressed, closePressed, updatedTop, updatedLeft } = this.state;
@@ -161,17 +155,11 @@ class Window extends Component<Props, State> {
       actualTop = updatedTop;
     }
 
-    // actualTop = show ? actualTop : -500;
-    const isDocked = docked
-      ? docked(currentX - offsetX, currentY - offsetY)
-      : false;
-    actualTop = isColor && colorWindow && !isDocked ? actualTop : -1000;
-
     return (
       <div
         className={classNames({
-          [styles.window]: true
-          // [styles['window--hidden']]: !show
+          [styles.window]: true,
+          [styles['window--hidden']]: !show
         })}
         style={{
           height: `${height}px`,
@@ -190,6 +178,11 @@ class Window extends Component<Props, State> {
           onMouseUp={() => {
             if (active && titlePressed) {
               if (docked && docked(currentX - offsetX, currentY - offsetY)) {
+                console.log(
+                  'title docked at',
+                  currentX - offsetX,
+                  currentY - offsetY
+                );
                 setMarginLeft(currentX - offsetX);
               }
               this.unpressTitle();
@@ -216,7 +209,7 @@ class Window extends Component<Props, State> {
         </div>
         <div className={styles.window__content}>{content}</div>
         {moving &&
-          // show &&
+          show &&
           active && (
             <div
               className={classNames(styles.move, {
@@ -247,9 +240,7 @@ function mapStateToProps(state) {
 
     // initial mousemove offset
     offsetX: state.window.offsetX,
-    offsetY: state.window.offsetY,
-
-    colorWindow: state.window.colorWindow
+    offsetY: state.window.offsetY
   };
 }
 

@@ -14,13 +14,6 @@ import {
   swapPrimarySecondary
 } from '../../actions/color';
 
-import {
-  startMoving,
-  stopMoving,
-  moveWindow,
-  showWindow
-} from '../../actions/window';
-
 import ColorCell from './ColorCell';
 import styles from './Colorbar.scss';
 
@@ -37,47 +30,12 @@ type Props = {
   palette: Array<string>,
   style?: { [string]: string },
   inWindow?: boolean,
-  marginLeft: number,
-
-  moving: boolean,
-  startMoving: (number, number) => void,
-  stopMoving: () => void
+  marginLeft: number
 };
 
-type State = {
-  clicked: boolean
-};
-
-class Colorbar extends Component<Props, State> {
+class Colorbar extends Component<Props> {
   canvas: ?HTMLCanvasElement;
   input: ?HTMLInputElement;
-  ownInstance: ?HTMLDivElement;
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      clicked: false
-    };
-  }
-
-  componentDidMount() {
-    document.addEventListener('mouseup', () => {
-      const { window: state } = window.store.getState();
-      if (state.moving && this.state.clicked) {
-        window.store.dispatch(showWindow('color'));
-        this.setState({
-          clicked: false
-        });
-      }
-    });
-
-    document.addEventListener('mousemove', (e: MouseEvent) => {
-      const { window: state } = window.store.getState();
-      if (state.moving && this.state.clicked) {
-        window.store.dispatch(moveWindow(e.clientX, e.clientY));
-      }
-    });
-  }
 
   componentDidUpdate() {
     const { tertiary } = this.props;
@@ -101,14 +59,8 @@ class Colorbar extends Component<Props, State> {
       palette,
       style,
       marginLeft,
-      inWindow,
-
-      moving,
-      startMoving,
-      stopMoving
+      inWindow
     } = this.props;
-
-    const { clicked } = this.state;
 
     let debounce: TimeoutID;
 
@@ -116,35 +68,6 @@ class Colorbar extends Component<Props, State> {
       <div
         className={styles.colorbar}
         style={inWindow ? style : { marginLeft: `${marginLeft + 2}px` }}
-        onMouseDown={() => {
-          if (!clicked && !inWindow) {
-            this.setState({
-              clicked: true
-            });
-          }
-        }}
-        onMouseUp={() => {
-          if (clicked && !inWindow) {
-            this.setState({
-              clicked: false
-            });
-            if (moving) {
-              stopMoving();
-            }
-          }
-        }}
-        onMouseMove={e => {
-          if (!moving && clicked && !inWindow) {
-            // this sets the offset
-            if (this.ownInstance) {
-              const rect = this.ownInstance.getBoundingClientRect();
-              startMoving(e.clientX - rect.left, e.clientY - rect.top);
-            }
-          }
-        }}
-        ref={el => {
-          this.ownInstance = el;
-        }}
       >
         <div className={styles.colorbar__switcher}>
           <canvas
@@ -194,8 +117,6 @@ class Colorbar extends Component<Props, State> {
               color={color}
               onClick={e => {
                 e.preventDefault();
-                e.stopPropagation();
-
                 changePrimary(color);
               }}
               onContextMenu={e => {
@@ -240,9 +161,7 @@ function mapStateToProps(state) {
     secondary: state.color.secondary,
     tertiary: state.color.tertiary,
     palette: state.color.palette,
-    marginLeft: state.color.marginLeft,
-
-    moving: state.window.moving
+    marginLeft: state.color.marginLeft
   };
 }
 
@@ -254,9 +173,7 @@ function mapDispatchToProps(dispatch) {
       changeTertiary,
       swapPrimarySecondary,
       changePalette,
-      changePaletteIndex,
-      startMoving,
-      stopMoving
+      changePaletteIndex
     },
     dispatch
   );

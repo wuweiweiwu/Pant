@@ -1,9 +1,7 @@
 import {
   START_MOVING_WINDOW,
   STOP_MOVING_WINDOW,
-  MOVE_WINDOW,
-  SHOW_WINDOW,
-  HIDE_WINDOW
+  MOVE_WINDOW
 } from '../actions/window';
 
 const init = {
@@ -11,9 +9,7 @@ const init = {
   offsetX: 0,
   offsetY: 0,
   currentX: 0,
-  currentY: 0,
-
-  colorWindow: false
+  currentY: 0
 };
 
 export default function reducer(state = init, action) {
@@ -36,18 +32,6 @@ export default function reducer(state = init, action) {
         currentX: action.x,
         currentY: action.y
       };
-    case SHOW_WINDOW:
-      if (action.window === 'color')
-        return {
-          ...state,
-          colorWindow: true
-        };
-    case HIDE_WINDOW:
-      if (action.window === 'color')
-        return {
-          ...state,
-          colorWindow: false
-        };
     default:
       return state;
   }
