@@ -14,6 +14,10 @@ yarn dev
 
 ## Features
 
+### Windows
+* [ ] draggable
+* [ ] outline when dragging
+
 ### Tools
 
 * [ ] Free form select
